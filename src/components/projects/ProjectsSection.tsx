@@ -1,124 +1,3 @@
-// "use client";
-
-// import { useEffect, useRef } from "react";
-// import { motion } from "framer-motion";
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/ScrollTrigger";
-// import FeaturedProject from "./FeaturedProject";
-// import ProjectCard from "./ProjectCard";
-
-// gsap.registerPlugin(ScrollTrigger);
-
-// const projects = [
-
-//   {
-//     title: "VRS RealInvest",
-//     description:
-//       "Real estate investment platform with modern UI and property listing system.",
-//     tech: ["Next.js", "Node.js", "MongoDB", "Tailwind"],
-//     image: "/vrs.png",
-//     github: "#",
-//     live: "#",
-//   },
-
-//   {
-//     title: "Limoxy",
-//     description:
-//       "Booking management platform with invoices and admin dashboard.",
-//     tech: ["Next.js", "Express", "MongoDB"],
-//     image: "/limoxy.png",
-//     github: "#",
-//     live: "#",
-//   },
-
-//   {
-//     title: "Fetch Kids",
-//     description:
-//       "E-commerce platform with reporting and integrations.",
-//     tech: ["Next.js", "Node.js", "MongoDB"],
-//     image: "/fetch-kids.png",
-//     github: "#",
-//     live: "#",
-//   },
-// ];
-
-// export default function ProjectsSection() {
-
-//   const scrollRef = useRef<HTMLDivElement | null>(null);
-
-//   useEffect(() => {
-
-//     if (!scrollRef.current) return;
-
-//     const el = scrollRef.current;
-
-//     gsap.to(el, {
-//       xPercent: -50,
-//       ease: "none",
-//       scrollTrigger: {
-//         trigger: el,
-//         start: "top center",
-//         end: "+=1200",
-//         scrub: true,
-//         pin: true,
-//       },
-//     });
-
-//   }, []);
-
-//   return (
-//     <section
-//       id="projects"
-//       className="relative py-40 overflow-hidden"
-//     >
-
-//       {/* spotlight cursor */}
-
-//       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_60%)]"/>
-
-//       <div className="max-w-7xl mx-auto px-6">
-
-//         {/* title */}
-
-//         <motion.div
-//           initial={{ opacity: 0, y: 50 }}
-//           whileInView={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.6 }}
-//           className="text-center mb-24"
-//         >
-//           <h2 className="text-5xl font-bold bg-gradient-to-r from-indigo-400 to-green-400 text-transparent bg-clip-text">
-//             Projects
-//           </h2>
-
-//           <p className="text-gray-400 mt-6 max-w-xl mx-auto">
-//             A selection of projects showcasing my work in full-stack development
-//             and modern UI design.
-//           </p>
-//         </motion.div>
-
-//         {/* featured */}
-
-//         <FeaturedProject project={projects[0]} />
-
-//       </div>
-
-//       {/* horizontal scroll */}
-
-//       <div
-//         ref={scrollRef}
-//         className="flex gap-10 px-20"
-//       >
-
-//         {projects.map((project, index) => (
-//           <ProjectCard key={index} project={project} />
-//         ))}
-
-//       </div>
-//     </section>
-//   );
-// }
-
-
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -151,8 +30,7 @@ const projects = [
   },
   {
     title: "Fetch Kids",
-    description:
-      "E-commerce platform with reporting and integrations.",
+    description: "E-commerce platform with reporting and integrations.",
     tech: ["Next.js", "Node.js", "MongoDB"],
     image: "/fetch-kids.png",
     github: "#",
@@ -198,9 +76,7 @@ export default function Projects() {
 
   return (
     <section id="projects" className="py-40 overflow-hidden">
-
       <div className="max-w-7xl mx-auto px-6">
-
         {/* TITLE */}
 
         <div className="text-center mb-24">
@@ -212,9 +88,7 @@ export default function Projects() {
         {/* FEATURED AUTO SLIDER */}
 
         <div className="mb-32">
-
           <AnimatePresence mode="wait">
-
             <motion.div
               key={project.title}
               initial={{ opacity: 0, x: 120 }}
@@ -223,7 +97,6 @@ export default function Projects() {
               transition={{ duration: 0.6 }}
               className="grid md:grid-cols-2 gap-12 items-center"
             >
-
               <div className="relative h-[320px] rounded-2xl overflow-hidden border border-white/10">
                 <Image
                   src={project.image}
@@ -238,9 +111,7 @@ export default function Projects() {
                   {project.title}
                 </h3>
 
-                <p className="text-gray-400 mt-4">
-                  {project.description}
-                </p>
+                <p className="text-gray-400 mt-4">{project.description}</p>
 
                 <div className="flex flex-wrap gap-2 mt-6">
                   {project.tech.map((tech, i) => (
@@ -252,42 +123,28 @@ export default function Projects() {
                     </span>
                   ))}
                 </div>
-
               </div>
-
             </motion.div>
-
           </AnimatePresence>
-
         </div>
       </div>
 
       {/* HORIZONTAL SCROLL PROJECTS */}
 
-      <div
-        ref={scrollRef}
-        className="flex gap-10 px-20"
-      >
-
+      <div ref={scrollRef} className="flex gap-10 px-20">
         {projects.map((project, index) => (
-
           <Tilt key={index} tiltMaxAngleX={8} tiltMaxAngleY={8}>
-
             <div className="w-[320px] backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
-
               <div className="relative h-48">
-
                 <Image
                   src={project.image}
                   alt={project.title}
                   fill
                   className="object-cover"
                 />
-
               </div>
 
               <div className="p-6">
-
                 <h3 className="text-lg font-semibold text-white">
                   {project.title}
                 </h3>
@@ -295,17 +152,11 @@ export default function Projects() {
                 <p className="text-gray-400 text-sm mt-2">
                   {project.description}
                 </p>
-
               </div>
-
             </div>
-
           </Tilt>
-
         ))}
-
       </div>
-
     </section>
   );
 }

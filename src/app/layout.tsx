@@ -1,30 +1,35 @@
-import "./globals.css"
-import Navbar from "@/components/ui/Navbar"
-import SmoothScroll from "@/components/ui/SmoothScroll"
-import CursorEffect from "@/components/ui/CursorEffect"
-import ScrollProgress from "@/components/ui/ScrollProgress"
+import "./globals.css";
+import Navbar from "@/components/ui/Navbar";
+import SmoothScroll from "@/components/ui/SmoothScroll";
+import CursorEffect from "@/components/ui/CursorEffect";
+import ScrollProgress from "@/components/ui/ScrollProgress";
+import PageTransition from "@/components/ui/PageTransition";
+import LoaderProvider from "@/components/ui/LoaderProvider";
+
 export default function RootLayout({
- children,
+  children,
 }: {
- children: React.ReactNode
+  children: React.ReactNode;
 }) {
+  return (
+    <html lang="en">
+      <body>
 
- return (
+        <LoaderProvider>
 
-  <html lang="en">
+          <Navbar />
 
-   <body>
-    <Navbar/>
+          <SmoothScroll />
+          <ScrollProgress />
+          <CursorEffect />
 
-    <SmoothScroll/>
-    <ScrollProgress/>    
-    <CursorEffect/> 
-    {children}
+          <PageTransition>
+            {children}
+          </PageTransition>
 
-   </body>
+        </LoaderProvider>
 
-  </html>
-
- )
-
+      </body>
+    </html>
+  );
 }

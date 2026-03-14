@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 
 export default function Navbar(){
 
+
  return(
 
  <motion.nav
