@@ -81,3 +81,19 @@ body::before{
  );
  z-index:0;
 }
+
+
+
+@keyframes gridMove {
+ 0% {
+  transform: translateY(0);
+ }
+
+ 100% {
+  transform: translateY(40px);
+ }
+}
+
+.grid-animation {
+ animation: gridMove 20s linear infinite;
+}

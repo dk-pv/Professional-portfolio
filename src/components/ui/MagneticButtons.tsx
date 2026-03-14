@@ -3,7 +3,12 @@
 import { motion } from "framer-motion"
 import { useRef } from "react"
 
-export default function MagneticButton({children}:{children:React.ReactNode}){
+interface MagneticButtonProps {
+  children: React.ReactNode
+  onClick?: () => void
+}
+
+export default function MagneticButton({ children, onClick }: MagneticButtonProps){
 
  const ref = useRef<HTMLButtonElement>(null)
 
@@ -27,6 +32,7 @@ export default function MagneticButton({children}:{children:React.ReactNode}){
 
   <motion.button
    ref={ref}
+   onClick={onClick}
    onMouseMove={handleMove}
    onMouseLeave={reset}
    className="px-8 py-3 rounded-full bg-indigo-500 text-white"

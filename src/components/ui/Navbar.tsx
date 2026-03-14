@@ -29,7 +29,7 @@ export default function Navbar(){
   
    <a
     key={item}
-    href={`#${item}`}
+    href={`${item}`}
     className="relative hover:text-indigo-400 transition"
    >
 
