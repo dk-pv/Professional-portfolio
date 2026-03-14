@@ -1,26 +1,83 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Theme */
+
+:root{
+  --bg:#020617;
+  --surface:#0f172a;
+  --accent:#6366f1;
+  --highlight:#22c55e;
+  --text:#e2e8f0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Body */
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter, sans-serif;
+  overflow-x:hidden;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Smooth scroll */
+
+html{
+  scroll-behavior:smooth;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Glow utilities */
+
+.glow-indigo{
+  box-shadow:0 0 40px rgba(99,102,241,0.45);
+}
+
+.glow-green{
+  box-shadow:0 0 40px rgba(34,197,94,0.45);
+}
+
+/* Glass effect */
+
+.glass{
+  backdrop-filter:blur(18px);
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+}
+
+/* Gradient text */
+
+.gradient-text{
+  background:linear-gradient(
+    90deg,
+    #6366f1,
+    #a855f7,
+    #22c55e
+  );
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* Animated gradient */
+
+@keyframes gradientMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+.gradient-animate{
+  background-size:200% 200%;
+  animation:gradientMove 6s ease infinite;
+}
+
+body::before{
+ content:"";
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ background:radial-gradient(
+   600px circle at var(--x) var(--y),
+   rgba(99,102,241,0.15),
+   transparent 40%
+ );
+ z-index:0;
 }
