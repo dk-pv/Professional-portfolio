@@ -1,9 +1,11 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useRouter } from "next/navigation"
 
 export default function Navbar(){
 
+ const router = useRouter()
 
  return(
 
@@ -19,10 +21,12 @@ export default function Navbar(){
 
   {/* logo */}
 
-  <span className="font-semibold text-white tracking-wide">
+  <span
+   onClick={()=>router.push("/")}
+   className="font-semibold text-white tracking-wide cursor-pointer hover:text-indigo-400 transition"
+  >
    Danish
   </span>
-
 
   {/* links */}
 
@@ -31,7 +35,7 @@ export default function Navbar(){
    <a
     key={item}
     href={`${item}`}
-    className="relative hover:text-indigo-400 transition"
+    className="relative group hover:text-indigo-400 transition"
    >
 
     {item.charAt(0).toUpperCase()+item.slice(1)}
