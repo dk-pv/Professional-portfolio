@@ -20,7 +20,6 @@ export default function Hero() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center">
         {/* LEFT SIDE */}
-
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -32,7 +31,7 @@ export default function Hero() {
 
           <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
             <span className="bg-gradient-to-r from-indigo-400 via-purple-500 to-green-400 bg-clip-text text-transparent">
-              Danish PV
+              Danish Pv
             </span>
           </h1>
 
@@ -42,7 +41,6 @@ export default function Hero() {
           </p>
 
           {/* Glass Card */}
-
           <Tilt glareEnable glareMaxOpacity={0.2} scale={1.02}>
             <div className="mt-10 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-6 max-w-md shadow-xl">
               <p className="text-gray-300 text-sm">
@@ -53,21 +51,17 @@ export default function Hero() {
           </Tilt>
 
           {/* Buttons */}
-<div className="mt-10 flex gap-6 flex-wrap">
+          <div className="mt-10 flex gap-6 flex-wrap">
+            <MagneticButton>View Projects</MagneticButton>
 
-  <MagneticButton>
-    View Projects
-  </MagneticButton>
-
-  <MagneticButton>
-    Contact Me
-  </MagneticButton>
-
-</div>
+            {/* Resume Button */}
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+              <MagneticButton>Resume</MagneticButton>
+            </a>
+          </div>
         </motion.div>
 
         {/* RIGHT SIDE (Avatar Card) */}
-
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
@@ -97,7 +91,6 @@ export default function Hero() {
       </div>
 
       {/* Scroll Indicator */}
-
       <motion.div
         animate={{ y: [0, 12, 0] }}
         transition={{ repeat: Infinity, duration: 2 }}

@@ -2,111 +2,152 @@
 
 import { motion } from "framer-motion";
 
-const skills = [
-  {
-    title: "Frontend",
-    items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Redux"],
-  },
-  {
-    title: "Backend",
-    items: ["Node.js", "Express.js", "REST API"],
-  },
-  {
-    title: "Database",
-    items: ["MongoDB", "Mongoose"],
-  },
-  {
-    title: "Tools",
-    items: ["Git", "GitHub", "Postman", "Axios", "Stripe API"],
-  },
+const skillCategories = [
+  "Frontend",
+  "Backend",
+  "Auth",
+  "Real-Time",
+  "Payments",
+  "Tools",
+  "Architecture",
 ];
 
-const container = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-};
-
-const card = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0 },
-};
+const stack = [
+  "React.js",
+  "Next.js",
+  "Redux",
+  "JavaScript (ES6+)",
+  "HTML5",
+  "CSS3",
+  "Tailwind CSS",
+  "Node.js",
+  "Express.js",
+  "RESTful APIs",
+  "MongoDB",
+  "Mongoose",
+  "JWT",
+  "OAuth",
+  "OTP Authentication",
+  "Socket.IO",
+  "Stripe API",
+  "Git",
+  "GitHub",
+  "Postman",
+  "Axios",
+  "npm",
+  "Agile",
+  "Scrum",
+  "MVC Architecture",
+];
 
 export default function SkillsSection() {
   return (
-    <section id="skills" className="relative py-36 px-6 overflow-hidden">
+    <section
+      id="skills"
+      className="relative py-40 px-6 overflow-hidden"
+    >
 
       {/* glow background */}
+      <div className="absolute w-[500px] h-[500px] bg-purple-500 blur-[220px] opacity-20 rounded-full top-0 left-0" />
+      <div className="absolute w-[500px] h-[500px] bg-indigo-500 blur-[220px] opacity-20 rounded-full bottom-0 right-0" />
 
-      <div className="absolute w-[500px] h-[500px] bg-indigo-500 blur-[200px] opacity-20 rounded-full top-20 left-0" />
-      <div className="absolute w-[500px] h-[500px] bg-green-400 blur-[200px] opacity-20 rounded-full bottom-0 right-0" />
+      <div className="max-w-7xl mx-auto relative z-10">
 
-      <div className="max-w-6xl mx-auto relative z-10">
-
-        {/* heading */}
-
-        <motion.div
+        {/* title */}
+        <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-4xl md:text-5xl font-bold mb-20"
         >
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-400 via-purple-400 to-green-400 bg-clip-text text-transparent">
-            Skills
-          </h2>
+          My Skills
+        </motion.h2>
 
-          <p className="text-gray-400 mt-5 max-w-lg mx-auto">
-            Technologies I use to build scalable full-stack applications and
-            modern web experiences.
-          </p>
-        </motion.div>
+        <div className="grid md:grid-cols-2 gap-16">
 
-        {/* skills grid */}
+          {/* left intro */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-2xl font-semibold mb-4">
+              I build things for the people
+            </h3>
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          className="grid md:grid-cols-2 gap-10"
-        >
-          {skills.map((skill, index) => (
-            <motion.div
-              key={index}
-              variants={card}
-              whileHover={{
-                y: -8,
-                scale: 1.02,
-              }}
-              transition={{ type: "spring", stiffness: 200 }}
-              className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-xl p-8 hover:border-indigo-400/40 hover:shadow-lg hover:shadow-indigo-500/10 transition"
-            >
-              <h3 className="text-lg font-semibold text-white mb-6">
-                {skill.title}
-              </h3>
+            <p className="italic text-gray-400">
+              I can Design, Develop, Deploy
+            </p>
+
+            {/* categories */}
+            <div className="mt-14">
+
+              <div className="flex items-center gap-4 mb-5">
+                <span className="text-lg font-medium">Skills →</span>
+              </div>
 
               <div className="flex flex-wrap gap-3">
-                {skill.items.map((item, i) => (
-                  <motion.span
+                {skillCategories.map((cat, i) => (
+                  <span
                     key={i}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: i * 0.05 }}
-                    viewport={{ once: true }}
-                    className="text-xs px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-300 hover:bg-indigo-500/20 hover:border-indigo-400/30 transition"
+                    className="px-4 py-2 text-sm bg-white/5 border border-white/10 rounded-lg text-gray-300 hover:bg-white/10 transition"
                   >
-                    {item}
-                  </motion.span>
+                    {cat}
+                  </span>
                 ))}
               </div>
-            </motion.div>
-          ))}
-        </motion.div>
 
+              <div className="flex items-center gap-4 mt-12">
+                <span className="text-lg font-medium">Work Stack →</span>
+              </div>
+
+            </div>
+          </motion.div>
+
+          {/* right content */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+
+            {/* paragraph */}
+            <p className="text-gray-400 leading-relaxed mb-6">
+              I specialize in building full-stack web applications using
+              <span className="text-white"> Next.js, React, and the MERN stack</span>,
+              focusing on scalable architecture and modern development
+              practices.
+            </p>
+
+            <p className="text-gray-400 leading-relaxed mb-12">
+              I enjoy designing user interfaces from scratch and implementing
+              them with
+              <span className="text-white"> Tailwind CSS and modern frontend tools</span>,
+              creating fast, responsive, and production-ready web applications.
+            </p>
+
+            {/* stack grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-5">
+              {stack.map((tech, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ delay: i * 0.03 }}
+                  viewport={{ once: true }}
+                  className="text-gray-300 text-sm hover:text-white transition"
+                >
+                  {tech}
+                </motion.div>
+              ))}
+            </div>
+
+          </motion.div>
+
+        </div>
       </div>
     </section>
   );
