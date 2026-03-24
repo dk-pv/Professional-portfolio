@@ -6,42 +6,18 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, AnimatePresence } from "framer-motion";
 import Tilt from "react-parallax-tilt";
+import ProjectModal from "./ProjectModal";
+import { projects } from "@/lib/projects";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const projects = [
-  {
-    title: "VRS RealInvest",
-    description:
-      "Real estate investment platform with modern UI and property listing system.",
-    tech: ["Next.js", "Node.js", "MongoDB", "Tailwind"],
-    image: "/vrs.png",
-    github: "#",
-    live: "#",
-  },
-  {
-    title: "Limoxy",
-    description:
-      "Booking management platform with invoices and admin dashboard.",
-    tech: ["Next.js", "Express", "MongoDB"],
-    image: "/limoxy.png",
-    github: "#",
-    live: "#",
-  },
-  {
-    title: "Fetch Kids",
-    description: "E-commerce platform with reporting and integrations.",
-    tech: ["Next.js", "Node.js", "MongoDB"],
-    image: "/fetch-kids.png",
-    github: "#",
-    live: "#",
-  },
-];
+
+
 
 export default function Projects() {
   const [index, setIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
-
+const [selectedProject, setSelectedProject] = useState<any>(null);
   /* Auto slider */
 
   useEffect(() => {
@@ -132,31 +108,45 @@ export default function Projects() {
       {/* HORIZONTAL SCROLL PROJECTS */}
 
       <div ref={scrollRef} className="flex gap-10 px-20">
-        {projects.map((project, index) => (
-          <Tilt key={index} tiltMaxAngleX={8} tiltMaxAngleY={8}>
-            <div className="w-[320px] backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
-              <div className="relative h-48">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover"
-                />
-              </div>
+  {projects.map((project, index) => (
+    <Tilt key={index} tiltMaxAngleX={8} tiltMaxAngleY={8}>
+      <div
+        onClick={() => setSelectedProject(project)}
+        className="w-[320px] cursor-pointer backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-indigo-400/40 transition"
+      >
+        <div className="relative h-48">
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            className="object-cover"
+          />
 
-              <div className="p-6">
-                <h3 className="text-lg font-semibold text-white">
-                  {project.title}
-                </h3>
+          <span className="absolute top-3 left-3 text-xs bg-indigo-500 px-2 py-1 rounded">
+            Admin Included
+          </span>
+        </div>
 
-                <p className="text-gray-400 text-sm mt-2">
-                  {project.description}
-                </p>
-              </div>
-            </div>
-          </Tilt>
-        ))}
+        <div className="p-6">
+          <h3 className="text-lg font-semibold text-white">
+            {project.title}
+          </h3>
+
+          <p className="text-gray-400 text-sm mt-2">
+            {project.description}
+          </p>
+        </div>
       </div>
+    </Tilt>
+  ))}
+</div>
+
+{selectedProject && (
+  <ProjectModal
+    project={selectedProject}
+    onClose={() => setSelectedProject(null)}
+  />
+)}
     </section>
   );
 }

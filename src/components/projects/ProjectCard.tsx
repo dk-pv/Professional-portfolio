@@ -33,6 +33,8 @@ export default function ProjectCard({ project }: any) {
               GitHub
             </a>
 
+            
+
             <a
               href={project.live}
               className="px-4 py-2 text-sm rounded-lg bg-indigo-500 hover:bg-indigo-400 transition"
