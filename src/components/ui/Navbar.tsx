@@ -29,7 +29,7 @@ export default function Navbar() {
       {["about", "skills", "projects", "contact"].map((item) => (
         <a
           key={item}
-          href={`#${item}`} // 🔥 better for section scroll
+          href={`${item}`}
           className="relative group hover:text-indigo-400 transition"
         >
           {item.charAt(0).toUpperCase() + item.slice(1)}
