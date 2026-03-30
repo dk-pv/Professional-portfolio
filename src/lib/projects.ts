@@ -56,7 +56,7 @@ export const projects = [
     },
 
     github: "https://github.com/dk-pv?tab=repositories",
-    live: "https://vrs-user.vercel.app",
+    live: "https://www.vrsrealinvest.com.au/",
   },
 
 
