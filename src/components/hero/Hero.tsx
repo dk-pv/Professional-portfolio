@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import HeroParticles from "./HeroParticles";
 import Tilt from "react-parallax-tilt";
 import Image from "next/image";
+import Link from "next/link";
 import MagneticButton from "@/components/ui/MagneticButtons";
 import GridBackground from "../ui/GridBackground";
 
@@ -52,7 +53,10 @@ export default function Hero() {
 
           {/* Buttons */}
           <div className="mt-10 flex gap-6 flex-wrap">
+
+            <Link href="/projects">       
             <MagneticButton>View Projects</MagneticButton>
+            </Link>
 
             {/* Resume Button */}
             <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
