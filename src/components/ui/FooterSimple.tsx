@@ -2,8 +2,9 @@
 
 import { Github, Linkedin, Mail } from "lucide-react";
 import { motion } from "framer-motion";
+import GridBackground from "@/components/ui/GridBackground";
 
-const links = [
+const socials = [
   { href: "https://github.com", icon: Github, label: "GitHub" },
   { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
   { href: "mailto:danish.pv999@gmail.com", icon: Mail, label: "Email" },
@@ -11,78 +12,90 @@ const links = [
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden py-12 px-6" style={{ borderTop: "1px solid rgba(245,158,11,0.12)" }}>
-      {/* subtle glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at 50% 100%, rgba(245,158,11,0.05), transparent 70%)" }}
-      />
+    <footer className="relative overflow-hidden py-14 px-6" style={{ borderTop: "1px solid rgba(245,158,11,0.12)" }}>
+      <GridBackground />
 
-      <div className="max-w-6xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="max-w-6xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
 
-        {/* Left: branding */}
+        {/* Branding */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="flex items-center gap-3"
+          className="flex flex-col gap-2"
         >
           <span
-            className="text-xs font-mono tracking-widest px-3 py-1 rounded-full"
-            style={{ background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.2)", color: "#f59e0b" }}
+            className="text-xl font-black tracking-tight"
+            style={{
+              background: "linear-gradient(135deg, #f59e0b, #06b6d4)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
           >
-            © 2026
+            Danish Pv
           </span>
-          <p className="text-sm" style={{ color: "#475569" }}>
-            Danish Pv — Built with{" "}
-            <span style={{ color: "#94a3b8" }}>Next.js</span> &{" "}
-            <span style={{ color: "#94a3b8" }}>Tailwind</span>
+          <p className="text-xs font-mono" style={{ color: "#475569" }}>
+            © 2026 · Built with Next.js & Tailwind
           </p>
         </motion.div>
 
-        {/* Right: social links */}
+        {/* Social icons */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="flex gap-4"
+          className="flex gap-3"
         >
-          {links.map(({ href, icon: Icon, label }) => (
+          {socials.map(({ href, icon: Icon, label }, i) => (
             <motion.a
               key={label}
               href={href}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1, duration: 0.4 }}
+              viewport={{ once: true }}
               whileHover={{ scale: 1.15, y: -3 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300"
+              whileTap={{ scale: 0.92 }}
+              className="w-10 h-10 rounded-xl flex items-center justify-center group transition-all duration-300"
               style={{
                 background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.07)",
                 color: "#475569",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(245,158,11,0.4)";
-                (e.currentTarget as HTMLElement).style.color = "#f59e0b";
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 0 20px rgba(245,158,11,0.15)";
+                const el = e.currentTarget as HTMLElement;
+                el.style.borderColor = "rgba(245,158,11,0.4)";
+                el.style.color = "#f59e0b";
+                el.style.boxShadow = "0 0 20px rgba(245,158,11,0.15)";
+                el.style.background = "rgba(245,158,11,0.05)";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.08)";
-                (e.currentTarget as HTMLElement).style.color = "#475569";
-                (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                const el = e.currentTarget as HTMLElement;
+                el.style.borderColor = "rgba(255,255,255,0.07)";
+                el.style.color = "#475569";
+                el.style.boxShadow = "none";
+                el.style.background = "rgba(255,255,255,0.03)";
               }}
             >
-              <Icon size={16} />
+              <Icon size={15} />
             </motion.a>
           ))}
         </motion.div>
       </div>
 
-      {/* Bottom line */}
-      <div className="mt-8 h-px max-w-6xl mx-auto" style={{ background: "linear-gradient(90deg, transparent, rgba(245,158,11,0.2), rgba(6,182,212,0.2), transparent)" }} />
+      {/* Bottom gradient rule */}
+      <div
+        className="mt-10 h-px max-w-6xl mx-auto"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent, rgba(245,158,11,0.25), rgba(6,182,212,0.25), transparent)",
+        }}
+      />
     </footer>
   );
 }

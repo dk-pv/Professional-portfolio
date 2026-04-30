@@ -4,10 +4,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
 const stats = [
-  { value: "2+", label: "Years Experience", color: "#f59e0b", sub: "yrs" },
-  { value: "3+", label: "Projects Built", color: "#06b6d4", sub: "apps" },
-  { value: "MERN", label: "Primary Stack", color: "#f59e0b", sub: "stack" },
-  { value: "FastAPI", label: "Backend Tools", color: "#06b6d4", sub: "python" },
+  { value: "2+", label: "Years Experience", color: "#f59e0b" },
+  { value: "3+", label: "Projects Built", color: "#06b6d4" },
+  { value: "MERN", label: "Primary Stack", color: "#f59e0b" },
+  { value: "FastAPI", label: "Backend Tools", color: "#06b6d4" },
 ];
 
 export default function About() {
@@ -16,62 +16,47 @@ export default function About() {
     target: sectionRef,
     offset: ["start end", "end start"],
   });
-  const bgY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  const y = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   return (
     <section
       ref={sectionRef}
+      id="about"
       className="relative py-40 px-6 overflow-hidden"
-      style={{
-        background:
-          "radial-gradient(ellipse at 20% 50%, #050505 0%, #000000 60%, #000000 100%)",
-      }}
     >
-      {/* ── Animated glow orbs ── */}
-      <motion.div
-        style={{
-          y: bgY,
-          background: "radial-gradient(circle, #06b6d4 0%, transparent 70%)",
-          top: "-5%",
-          left: "-10%",
-          filter: "blur(90px)",
-        }}
-        className="absolute w-[700px] h-[700px] rounded-full pointer-events-none"
-        animate={{ scale: [1, 1.1, 1], opacity: [0.12, 0.2, 0.12] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <div
-        className="absolute w-[700px] h-[700px] rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, #f59e0b 0%, transparent 70%)",
-          top: "-5%",
-          left: "-10%",
-          filter: "blur(90px)",
-          opacity: 0.08,
-        }}
-      />
-      <div
-        className="absolute w-[600px] h-[600px] rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, #06b6d4 0%, transparent 70%)",
-          bottom: "-5%",
-          right: "-10%",
-          filter: "blur(90px)",
-          opacity: 0.06,
-        }}
-      />
+      {/*
+        NO <GridBackground /> here — it lives in layout.tsx (fixed, full page).
+        Each section just needs its own subtle inline micro-glow
+        so the zone feels distinct without re-rendering animations.
+      */}
 
-      {/* ── Grid texture overlay ── */}
+      {/* ── About micro-glow: amber bottom-left ── */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-3"
+        className="pointer-events-none absolute rounded-full"
         style={{
-          backgroundImage:
-            "linear-gradient(rgba(245,158,11,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(245,158,11,0.4) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
+          width: 500,
+          height: 500,
+          background: "radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%)",
+          filter: "blur(80px)",
+          bottom: "-10%",
+          left: "-8%",
+        }}
+      />
+      {/* ── About micro-glow: cyan top-right ── */}
+      <div
+        className="pointer-events-none absolute rounded-full"
+        style={{
+          width: 450,
+          height: 450,
+          background: "radial-gradient(circle, rgba(6,182,212,0.07) 0%, transparent 70%)",
+          filter: "blur(80px)",
+          top: "-8%",
+          right: "-6%",
         }}
       />
 
       <div className="max-w-7xl mx-auto relative z-10">
+
         {/* ── Section Header ── */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -89,27 +74,26 @@ export default function About() {
             style={{ color: "#f59e0b" }}
           >
             <span
-              className="w-8 h-px inline-block"
+              className="inline-block w-8 h-px"
               style={{ background: "#f59e0b" }}
             />
             Who I Am
           </motion.p>
 
-          <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none mb-6">
-            <span
-              style={{
-                background:
-                  "linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #06b6d4 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              About Me
-            </span>
+          <h2
+            className="text-5xl md:text-7xl font-black tracking-tight leading-none"
+            style={{
+              background:
+                "linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #06b6d4 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            About Me
           </h2>
 
           <p
-            className="text-lg max-w-2xl leading-relaxed"
+            className="mt-6 text-lg max-w-2xl leading-relaxed"
             style={{ color: "#64748b" }}
           >
             Passionate MERN Stack Developer focused on building scalable
@@ -120,6 +104,7 @@ export default function About() {
 
         {/* ── Main grid ── */}
         <div className="grid md:grid-cols-2 gap-16 items-start">
+
           {/* ── LEFT: Bio card ── */}
           <motion.div
             initial={{ opacity: 0, x: -60 }}
@@ -127,11 +112,12 @@ export default function About() {
             transition={{ duration: 0.9 }}
             viewport={{ once: true }}
           >
-            {/* Top accent line */}
+            {/* Top accent rule */}
             <div
               className="h-px mb-8 w-full"
               style={{
-                background: "linear-gradient(90deg, #f59e0b, transparent)",
+                background:
+                  "linear-gradient(90deg, #f59e0b, rgba(6,182,212,0.4), transparent)",
               }}
             />
 
@@ -143,12 +129,12 @@ export default function About() {
                 background: "rgba(255,255,255,0.02)",
                 border: "1px solid rgba(245,158,11,0.15)",
                 boxShadow:
-                  "inset 0 1px 0 rgba(245,158,11,0.08), 0 30px 60px rgba(0,0,0,0.5)",
+                  "inset 0 1px 0 rgba(245,158,11,0.08), 0 30px 60px rgba(0,0,0,0.4)",
               }}
             >
-              {/* Corner accent */}
+              {/* Corner glow */}
               <div
-                className="absolute top-0 right-0 w-20 h-20 rounded-bl-3xl opacity-20"
+                className="absolute top-0 right-0 w-24 h-24 rounded-bl-3xl opacity-20 pointer-events-none"
                 style={{
                   background:
                     "radial-gradient(circle at top right, #f59e0b, transparent)",
@@ -194,7 +180,7 @@ export default function About() {
                 and efficient backend systems.
               </p>
 
-              {/* Bottom tag row */}
+              {/* Tech tags */}
               <div className="mt-8 flex gap-2 flex-wrap">
                 {["React", "Next.js", "Node.js", "MongoDB", "FastAPI"].map(
                   (t) => (
@@ -209,18 +195,18 @@ export default function About() {
                     >
                       {t}
                     </span>
-                  ),
+                  )
                 )}
               </div>
             </motion.div>
 
-            {/* ── Timeline strip ── */}
+            {/* Currently strip */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.7 }}
               viewport={{ once: true }}
-              className="mt-8 rounded-2xl p-6 flex items-center gap-5"
+              className="mt-6 rounded-2xl p-5 flex items-center gap-4"
               style={{
                 background: "rgba(6,182,212,0.04)",
                 border: "1px solid rgba(6,182,212,0.15)",
@@ -229,8 +215,8 @@ export default function About() {
               <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-lg"
                 style={{
-                  background: "rgba(6,182,212,0.15)",
-                  border: "1px solid rgba(6,182,212,0.3)",
+                  background: "rgba(6,182,212,0.12)",
+                  border: "1px solid rgba(6,182,212,0.25)",
                 }}
               >
                 🚀
@@ -260,39 +246,37 @@ export default function About() {
             {stats.map((stat, i) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                initial={{ opacity: 0, y: 40, scale: 0.92 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ delay: i * 0.12, duration: 0.7 }}
                 viewport={{ once: true }}
-                whileHover={{ scale: 1.04, y: -4 }}
-                className="group relative rounded-2xl p-7 text-center cursor-default overflow-hidden transition-all duration-300"
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="group relative rounded-2xl p-7 text-center cursor-default overflow-hidden"
                 style={{
                   background: "rgba(255,255,255,0.02)",
-                  border: `1px solid ${stat.color}25`,
-                  boxShadow: `0 0 0 0 ${stat.color}00`,
+                  border: `1px solid ${stat.color}22`,
+                  transition: "border-color 0.3s, box-shadow 0.3s",
                 }}
-                onHoverStart={(e) => {
-                  (e.target as HTMLElement).style.boxShadow =
-                    `0 0 30px ${stat.color}15`;
-                  (e.target as HTMLElement).style.borderColor =
-                    `${stat.color}40`;
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.borderColor = `${stat.color}45`;
+                  el.style.boxShadow = `0 0 35px ${stat.color}12`;
                 }}
-                onHoverEnd={(e) => {
-                  (e.target as HTMLElement).style.boxShadow =
-                    `0 0 0 0 ${stat.color}00`;
-                  (e.target as HTMLElement).style.borderColor =
-                    `${stat.color}25`;
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.borderColor = `${stat.color}22`;
+                  el.style.boxShadow = "none";
                 }}
               >
-                {/* Glow on hover */}
+                {/* Hover glow layer */}
                 <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                   style={{
-                    background: `radial-gradient(circle at center, ${stat.color}08, transparent 70%)`,
+                    background: `radial-gradient(circle at center, ${stat.color}07, transparent 70%)`,
                   }}
                 />
 
-                {/* Top accent */}
+                {/* Top accent on hover */}
                 <div
                   className="absolute top-0 left-6 right-6 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{
@@ -317,33 +301,26 @@ export default function About() {
               </motion.div>
             ))}
 
-            {/* ── Wide bottom card ── */}
+            {/* Full-width bottom tag */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.7 }}
+              transition={{ delay: 0.55, duration: 0.7 }}
               viewport={{ once: true }}
-              className="col-span-2 rounded-2xl p-6 relative overflow-hidden"
+              className="col-span-2 rounded-2xl p-5 text-center"
               style={{
                 background:
-                  "linear-gradient(135deg, rgba(245,158,11,0.06), rgba(6,182,212,0.06))",
-                border: "1px solid rgba(255,255,255,0.06)",
+                  "linear-gradient(135deg, rgba(245,158,11,0.05), rgba(6,182,212,0.05))",
+                border: "1px solid rgba(255,255,255,0.05)",
               }}
             >
-              <div
-                className="absolute inset-0 rounded-2xl"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(245,158,11,0.03) 0%, transparent 50%, rgba(6,182,212,0.03) 100%)",
-                }}
-              />
-              <p
-                className="text-xs font-mono text-center relative z-10"
-                style={{ color: "#475569" }}
-              >
-                <span style={{ color: "#f59e0b" }}>Frontend</span> ·{" "}
-                <span style={{ color: "#94a3b8" }}>Backend</span> ·{" "}
-                <span style={{ color: "#06b6d4" }}>Database</span> ·{" "}
+              <p className="text-xs font-mono" style={{ color: "#475569" }}>
+                <span style={{ color: "#f59e0b" }}>Frontend</span>
+                {" · "}
+                <span style={{ color: "#94a3b8" }}>Backend</span>
+                {" · "}
+                <span style={{ color: "#06b6d4" }}>Database</span>
+                {" · "}
                 <span style={{ color: "#94a3b8" }}>DevOps</span>
               </p>
             </motion.div>

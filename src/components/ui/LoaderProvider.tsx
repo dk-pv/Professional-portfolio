@@ -1,31 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 import PageLoader from "./PageLoader";
 
-export default function LoaderProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function LoaderProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1600); // 👈 match your loader animation
-
+    const timer = setTimeout(() => setLoading(false), 1600);
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <AnimatePresence mode="wait">
-      {loading ? (
-        <PageLoader key="loader" />
-      ) : (
-        <div key="content">{children}</div>
-      )}
-    </AnimatePresence>
+    <>
+      {children}
+      {loading && <PageLoader />}
+    </>
   );
 }

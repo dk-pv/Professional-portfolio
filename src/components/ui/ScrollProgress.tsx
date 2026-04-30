@@ -13,13 +13,13 @@ export default function ScrollProgress() {
 
   return (
     <>
-      {/* Dim background track */}
+      {/* Dim track */}
       <div
         className="fixed top-0 left-0 right-0 h-[2px] z-[998]"
         style={{ background: "rgba(245,158,11,0.1)" }}
       />
 
-      {/* Amber → Cyan animated progress bar */}
+      {/* Animated amber → cyan bar */}
       <motion.div
         style={{ scaleX }}
         className="fixed top-0 left-0 right-0 h-[2px] origin-left z-[999]"
@@ -27,8 +27,9 @@ export default function ScrollProgress() {
         <div
           className="w-full h-full"
           style={{
-            background: "linear-gradient(90deg, #f59e0b 0%, #fbbf24 50%, #06b6d4 100%)",
-            boxShadow: "0 0 8px rgba(245,158,11,0.6)",
+            background:
+              "linear-gradient(90deg, #f59e0b 0%, #fbbf24 50%, #06b6d4 100%)",
+            boxShadow: "0 0 10px rgba(245,158,11,0.6), 0 0 20px rgba(245,158,11,0.3)",
           }}
         />
       </motion.div>
