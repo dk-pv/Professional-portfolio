@@ -36,7 +36,6 @@ export default function MagneticButton({
       ref={ref}
       onClick={onClick}
       onMouseMove={handleMove}
-      onMouseLeave={reset}
       whileTap={{ scale: 0.93 }}
       className="relative px-8 py-3 rounded-full font-semibold text-sm tracking-wide overflow-hidden transition-all duration-300"
       style={{
@@ -57,9 +56,11 @@ export default function MagneticButton({
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLElement;
-        el.style.boxShadow = isOutline ? "none" : "0 0 22px rgba(245,158,11,0.35)";
+        el.style.boxShadow = isOutline
+          ? "none"
+          : "0 0 22px rgba(245,158,11,0.35)";
         if (isOutline) el.style.background = "rgba(245,158,11,0.06)";
-        reset();
+        reset(); 
       }}
     >
       {/* shimmer on solid variant */}
