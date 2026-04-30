@@ -1,53 +1,60 @@
-"use client"
+"use client";
 
-import Particles from "react-tsparticles"
+import Particles from "react-tsparticles";
+import { loadSlim } from "tsparticles-slim";
+import { useCallback } from "react";
 
-export default function HeroParticles(){
+export default function HeroParticles() {
 
- return(
+  const particlesInit = useCallback(async (engine: any) => {
+    await loadSlim(engine);
+  }, []);
 
- <Particles
-   className="absolute inset-0 -z-10"
-   options={{
+  return (
+    <Particles
+      id="tsparticles"
+      init={particlesInit}
+      className="absolute inset-0 z-0" // ⚠️ fixed z-index
+      options={{
+        fullScreen: false,
 
-    fullScreen:false,
+        particles: {
+          number: { value: 70 },
 
-    particles:{
-      number:{value:60},
+          move: {
+            enable: true,
+            speed: 0.5,
+            outModes: { default: "bounce" },
+          },
 
-      size:{
-        value:{min:1,max:3}
-      },
+          color: {
+            value: ["#f59e0b", "#06b6d4"],
+          },
 
-      move:{
-        enable:true,
-        speed:0.6
-      },
+          links: {
+            enable: true,
+            distance: 130,
+            color: "#f59e0b",
+            opacity: 0.12,
+          },
 
-      color:{value:"#6366f1"},
+          opacity: {
+            value: { min: 0.2, max: 0.7 },
+          },
 
-      links:{
-        enable:true,
-        distance:140,
-        color:"#6366f1",
-        opacity:0.3
-      },
+          size: {
+            value: { min: 1, max: 3 },
+          },
+        },
 
-      opacity:{
-        value:0.6
-      }
+        interactivity: {
+          events: {
+            onHover: { enable: true, mode: "grab" },
+          },
+        },
 
-    },
-
-    interactivity:{
-      events:{
-        onHover:{enable:true,mode:"grab"}
-      }
-    }
-
-   }}
-  />
-
- )
-
+        detectRetina: true,
+      }}
+    />
+  );
 }

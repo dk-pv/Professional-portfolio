@@ -3,26 +3,29 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 
-export default function PageTransition({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
     <AnimatePresence mode="wait">
-
       <motion.div
         key={pathname}
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -30 }}
-        transition={{ duration: 0.4, ease: "easeInOut" }}
+        exit={{ opacity: 0, y: -24 }}
+        transition={{ duration: 0.45, ease: [0.215, 0.61, 0.355, 1] }}
       >
+        {/* Amber swipe on enter */}
+        <motion.div
+          className="fixed inset-0 pointer-events-none z-[9990]"
+          initial={{ scaleX: 1, transformOrigin: "left" }}
+          animate={{ scaleX: 0, transformOrigin: "right" }}
+          transition={{ duration: 0.5, ease: [0.215, 0.61, 0.355, 1] }}
+          style={{ background: "linear-gradient(135deg, #f59e0b, #06b6d4)" }}
+        />
+
         {children}
       </motion.div>
-
     </AnimatePresence>
   );
 }
