@@ -1,17 +1,12 @@
-"use client";
-
-
-import Projects from "@/components/projects/ProjectsSection";
+import ProjectsSection from "@/components/projects/ProjectsSection";
 import FooterSimple from "@/components/ui/FooterSimple";
 
-export default function AboutPage() {
+export default function ProjectsPage() {
   return (
     <>
-      <section className="min-h-screen ">
-        <Projects />
-      </section>
-
-      {/* Footer */}
+      <main className="min-h-screen">
+        <ProjectsSection />
+      </main>
       <FooterSimple />
     </>
   );

@@ -1,10 +1,10 @@
 import Hero from "@/components/hero/Hero";
 import About from "@/components/about/About";
 import SkillsOrbit from "@/components/skills/SkillsOrbit";
-import Projects from "@/components/projects/Projects";
 import Experience from "@/components/experience/Experience";
 import Contact from "@/components/contact/Contact";
 import Footer from "@/components/footer/Footer";
+import ProjectsSection from "@/components/projects/ProjectsSection";
 
 export default function Home() {
   return (
@@ -25,7 +25,7 @@ export default function Home() {
         <Experience />
       </section>
       <section id="projects">
-        <Projects />
+        <ProjectsSection />
       </section>
       <section id="contact">
         <Contact />

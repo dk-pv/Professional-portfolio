@@ -3,6 +3,7 @@ export const projects = [
     slug: "vrs-realinvest",
 
     title: "VRS RealInvest",
+    category: "application",
 
     description:
       "Full-stack real estate investment platform with advanced admin dashboard, property management, and analytics system.",
@@ -68,7 +69,7 @@ export const projects = [
     slug: "limoxy",
 
     title: "Limoxy",
-
+    category: "application",
     description:
       "A full-featured booking and transfer management system with advanced admin controls, automated invoicing, payment tracking, and real-time workflow management.",
 
@@ -154,11 +155,13 @@ export const projects = [
     live: "https://royal-limoxy-user.vercel.app/",
   },
 
+
+
   {
     slug: "fetch-kids",
 
     title: "Fetch Kids",
-
+   category: "application",
     description:
       "E-commerce platform with admin dashboard, reporting system, and integrations.",
 
