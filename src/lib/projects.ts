@@ -1,4 +1,87 @@
-export const projects = [
+type Project = {
+  slug: string;
+  title: string;
+  category: string;
+  description: string;
+  tech: string[];
+  image: string;
+
+  images: {
+    user: string[];
+    admin?: string[];
+  };
+
+  features: {
+    user: string[];
+    admin?: string[];
+    bookingManagementPage?: string[];
+  };
+
+  caseStudy: {
+    problem: string;
+    solution: string;
+    result: string;
+    architecture: string[];
+    detailedAdminFlow?: string[];
+  };
+
+  github: string;
+  live: string;
+};
+
+
+export const projects: Project[] = [
+  {
+    slug: "teal-culture",
+
+    title: "Teal Culture",
+    category: "website",
+
+    description:
+      "A modern, minimal, black-themed interior studio website designed to showcase premium architectural and interior works with a strong visual identity and immersive user experience.",
+
+    tech: ["Next.js", "Tailwind CSS", "Framer Motion"],
+
+    image: "/teal.png",
+
+    images: {
+      user: ["/teal-1.png", "/teal-2.png", "/teal-3.png"],
+    },
+
+    features: {
+      user: [
+        "Minimal black-themed UI with strong visual storytelling",
+        "Smooth animations and transitions for immersive browsing",
+        "Structured navigation (Mood, Studio, Work, Step In)",
+        "Project showcase with categorized interior works",
+        "Responsive design optimized for all devices",
+        "High-quality visual presentation for premium branding",
+      ],
+    },
+
+    caseStudy: {
+      problem:
+        "Interior studios often struggle to present their work in a visually impactful and structured way. Traditional websites lack storytelling, aesthetic consistency, and premium user experience.",
+
+      solution:
+        "Designed and developed a visually rich, minimal website focused on storytelling and presentation. Implemented a structured navigation system, smooth animations, and categorized project showcases to highlight interior works effectively.",
+
+      result:
+        "Delivered a premium digital presence that enhances brand identity, improves user engagement, and showcases projects in a clean and elegant format aligned with modern design trends.",
+
+      architecture: [
+        "Frontend: Next.js with App Router",
+        "Styling: Tailwind CSS with custom design system",
+        "Animations: Framer Motion for smooth transitions",
+        "Design Approach: Minimal, dark-themed, visual-first UI",
+        "Deployment: Optimized for performance and fast loading",
+      ],
+    },
+
+    github: "https://github.com/dk-pv?tab=repositories",
+    live: "https://www.moodbyteal.com/",
+  },
+
   {
     slug: "vrs-realinvest",
 
@@ -57,14 +140,9 @@ export const projects = [
     },
 
     github: "https://github.com/dk-pv?tab=repositories",
-    live: "https://www.vrsrealinvest.com.au/",
+    live: "https://vrsrealinvest.com.au",
   },
 
-
-
-
-
-  
   {
     slug: "limoxy",
 
@@ -155,13 +233,11 @@ export const projects = [
     live: "https://royal-limoxy-user.vercel.app/",
   },
 
-
-
   {
     slug: "fetch-kids",
 
     title: "Fetch Kids",
-   category: "application",
+    category: "application",
     description:
       "E-commerce platform with admin dashboard, reporting system, and integrations.",
 
