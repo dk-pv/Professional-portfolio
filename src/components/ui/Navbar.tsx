@@ -73,14 +73,14 @@ export default function Navbar() {
       >
         {/* Logo / Name */}
         <a
-          href="#"
+          href="/"
           onClick={(e) => {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
           className="mr-3 px-3 py-1 font-[Syne] font-bold text-sm text-white tracking-tight hover:text-indigo-400 transition-colors"
         >
-          Danish<span className="text-indigo-400">.</span>
+          D<span className="text-indigo-400">K</span>
         </a>
 
         {/* Divider */}
