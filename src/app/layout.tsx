@@ -15,29 +15,40 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const SITE_URL = "https://danishpv.dev";
+
+const DESCRIPTION =
+  "Danish Pv is a Full Stack Developer building enterprise applications, ERP systems and real-time platforms with NestJS, PostgreSQL and Next.js.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://danishpv.dev"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Danish Pv — Full Stack Developer",
     template: "%s — Danish Pv",
   },
-  description:
-    "Full Stack Developer specializing in the MERN stack, high-performance UI, and modern, production-grade web experiences.",
+  description: DESCRIPTION,
   keywords: [
     "Danish Pv",
     "Full Stack Developer",
-    "MERN Stack",
     "Next.js",
     "React",
+    "TypeScript",
+    "NestJS",
     "Node.js",
+    "PostgreSQL",
     "MongoDB",
-    "Web Developer",
+    "Enterprise Applications",
+    "ERP",
+    "Real-time Systems",
   ],
   authors: [{ name: "Danish Pv" }],
+  creator: "Danish Pv",
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Danish Pv — Full Stack Developer",
-    description:
-      "Full Stack Developer specializing in the MERN stack, high-performance UI, and modern web experiences.",
+    description: DESCRIPTION,
+    url: SITE_URL,
+    siteName: "Danish Pv",
     type: "website",
     locale: "en_US",
     images: [{ url: "/danish.png", width: 800, height: 1000, alt: "Danish Pv" }],
@@ -46,10 +57,40 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Danish Pv — Full Stack Developer",
     description:
-      "Full Stack Developer specializing in the MERN stack and modern web experiences.",
+      "Full Stack Developer building enterprise applications, ERP systems and real-time platforms with React, Next.js, NestJS, PostgreSQL and MongoDB.",
     images: ["/danish.png"],
   },
   icons: { icon: "/danish.png" },
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Danish Pv",
+  jobTitle: "Full Stack Developer",
+  description: DESCRIPTION,
+  url: SITE_URL,
+  image: `${SITE_URL}/danish.png`,
+  email: "mailto:danish.pv999@gmail.com",
+  sameAs: [
+    "https://github.com/dk-pv",
+    "https://www.linkedin.com/in/danish-pv/",
+  ],
+  knowsAbout: [
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Node.js",
+    "NestJS",
+    "PostgreSQL",
+    "MongoDB",
+    "Prisma ORM",
+    "Socket.IO",
+    "REST APIs",
+    "Enterprise Applications",
+    "ERP Systems",
+    "Real-time Systems",
+  ],
 };
 
 export const viewport: Viewport = {
@@ -67,6 +108,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className="antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+
         {/* One static, GPU-cheap background for the entire site */}
         <GridBackground />
 

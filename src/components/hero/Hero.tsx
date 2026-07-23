@@ -18,7 +18,7 @@ const item: Variants = {
   },
 };
 
-const TECH = ["React", "Next.js", "Node.js", "MongoDB", "TypeScript"];
+const TECH = ["Next.js", "TypeScript", "NestJS", "PostgreSQL", "Socket.IO"];
 
 export default function Hero() {
   return (
@@ -45,8 +45,9 @@ export default function Hero() {
             variants={item}
             className="mb-9 max-w-xl text-lg leading-relaxed text-zinc-400"
           >
-            Building scalable full-stack applications and polished, modern web
-            experiences with clean architecture and thoughtful detail.
+            I build enterprise software end to end — ERP platforms, real-time
+            tracking and HR systems — with NestJS, PostgreSQL and Next.js, from
+            data model to production.
           </motion.p>
 
           {/* Info card */}
@@ -55,13 +56,15 @@ export default function Hero() {
             className="card max-w-md p-5"
           >
             <p className="text-sm leading-relaxed text-zinc-400">
-              Specializing in the{" "}
-              <span className="font-medium text-indigo-300">MERN stack</span>,
-              high-performance UI, and{" "}
+              Comfortable across the stack — from{" "}
+              <span className="font-medium text-indigo-300">
+                API &amp; schema design
+              </span>{" "}
+              to{" "}
               <span className="font-medium text-violet-300">
-                refined web interactions
-              </span>
-              .
+                real-time systems
+              </span>{" "}
+              and the interfaces teams use daily.
             </p>
           </motion.div>
 

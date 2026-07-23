@@ -53,8 +53,9 @@ export default function ContactPage() {
               Contact Me
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-zinc-400">
-              Have a project idea or collaboration in mind? Send me a message and
-              let&apos;s build something great.
+              Whether it&apos;s an enterprise build, a full-stack role, or a hard
+              problem worth solving — send a message and I&apos;ll get back to
+              you.
             </p>
           </motion.div>
 

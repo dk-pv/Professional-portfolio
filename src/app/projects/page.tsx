@@ -5,7 +5,7 @@ import FooterSimple from "@/components/ui/FooterSimple";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Real-world full-stack projects by Danish Pv — booking systems, real estate platforms, e-commerce and more.",
+    "Full-stack projects by Danish Pv — enterprise ERP systems, the FleetTrack real-time tracking platform, booking and e-commerce applications, and more.",
 };
 
 export default function ProjectsPage() {

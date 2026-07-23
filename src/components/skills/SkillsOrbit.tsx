@@ -1,83 +1,73 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import {
-  Code,
-  Database,
-  ShieldCheck,
-  Zap,
-  CreditCard,
-  Wrench,
-  Layers,
-  Cloud,
-} from "lucide-react";
+import { Code, Server, Database, Zap, Cloud, Wrench } from "lucide-react";
 
 const skills = [
   {
     title: "Frontend",
     icon: Code,
     items: [
-      { name: "React.js", level: 90 },
+      { name: "React.js", level: 92 },
       { name: "Next.js", level: 92 },
-      { name: "Redux", level: 85 },
+      { name: "TypeScript", level: 88 },
       { name: "Tailwind CSS", level: 95 },
+      { name: "Redux Toolkit", level: 85 },
+      { name: "Framer Motion", level: 85 },
     ],
   },
   {
     title: "Backend",
-    icon: Database,
+    icon: Server,
     items: [
       { name: "Node.js", level: 90 },
+      { name: "NestJS", level: 88 },
       { name: "Express.js", level: 88 },
-      { name: "MongoDB", level: 85 },
+      { name: "Hono.js", level: 80 },
       { name: "REST APIs", level: 92 },
+      { name: "JWT & Auth", level: 90 },
     ],
   },
   {
-    title: "Auth",
-    icon: ShieldCheck,
+    title: "Database",
+    icon: Database,
     items: [
-      { name: "JWT", level: 90 },
-      { name: "OAuth", level: 80 },
-      { name: "OTP Auth", level: 85 },
+      { name: "PostgreSQL", level: 88 },
+      { name: "MongoDB", level: 88 },
+      { name: "Prisma ORM", level: 87 },
+      { name: "Mongoose", level: 85 },
     ],
   },
   {
     title: "Real-Time",
     icon: Zap,
-    items: [{ name: "Socket.IO", level: 88 }],
+    items: [
+      { name: "Socket.IO", level: 88 },
+      { name: "WebSockets", level: 85 },
+      { name: "Live Tracking", level: 85 },
+      { name: "Notifications", level: 84 },
+    ],
   },
   {
-    title: "Payments",
-    icon: CreditCard,
-    items: [{ name: "Stripe API", level: 85 }],
+    title: "DevOps",
+    icon: Cloud,
+    items: [
+      { name: "Vercel", level: 95 },
+      { name: "Railway", level: 88 },
+      { name: "Hostinger", level: 85 },
+      { name: "Git & GitHub", level: 92 },
+      { name: "CI/CD", level: 82 },
+    ],
   },
   {
     title: "Tools",
     icon: Wrench,
     items: [
-      { name: "Git", level: 92 },
-      { name: "GitHub", level: 90 },
+      { name: "Cloudinary", level: 85 },
+      { name: "WooCommerce", level: 82 },
       { name: "Postman", level: 88 },
-    ],
-  },
-  {
-    title: "Architecture",
-    icon: Layers,
-    items: [
-      { name: "MVC", level: 90 },
-      { name: "Agile", level: 85 },
-      { name: "Scrum", level: 80 },
-    ],
-  },
-  {
-    title: "Deployment",
-    icon: Cloud,
-    items: [
-      { name: "AWS (EC2 / S3)", level: 78 },
-      { name: "Vercel", level: 95 },
-      { name: "Render", level: 88 },
-      { name: "Hostinger", level: 85 },
+      { name: "Performance", level: 88 },
+      { name: "SEO", level: 85 },
     ],
   },
 ];

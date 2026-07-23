@@ -43,11 +43,10 @@ export default function About() {
           </h2>
 
           <p className="mt-5 text-lg leading-relaxed text-zinc-400">
-            I'm a Full Stack Developer with 2+ years of experience building
-            scalable, production-ready web applications. I specialize in modern
-            frontend development, robust backend architectures, real-time
-            systems, and enterprise business solutions using React, Next.js,
-            NestJS, Node.js, PostgreSQL, and MongoDB.
+            I build the systems businesses run on — ERP platforms, real-time
+            tracking and internal tooling used by real teams. My work lives in
+            the parts that are hard to get right: data modeling, access control,
+            real-time reliability, and APIs that stay clean as a product grows.
           </p>
         </motion.div>
 
@@ -61,38 +60,31 @@ export default function About() {
           >
             <div className="card card-hover p-8">
               <p className="text-base leading-relaxed text-zinc-300">
-                I'm a{" "}
-                <span className="font-medium text-white">
-                  Full Stack Developer
-                </span>{" "}
-                with hands-on experience building enterprise ERP systems,
-                real-time vehicle tracking platforms, business management
-                software, e-commerce solutions, and scalable web applications.
-                I specialize in{" "}
-                <span className="font-medium text-indigo-300">
-                  React, Next.js, NestJS, Node.js, PostgreSQL, MongoDB, and
-                  Prisma ORM
+                Over the last two years I&apos;ve shipped enterprise software
+                end to end:{" "}
+                <span className="font-medium text-violet-300">
+                  Emarath ERP
                 </span>
-                , delivering maintainable, high-performance applications with
-                clean architecture and modern user experiences.
+                , an HR management system, and{" "}
+                <span className="font-medium text-white">FleetTrack</span> — a
+                real-time vehicle-tracking platform that streams live telemetry
+                over WebSockets. I own features from the database schema and API
+                design through to the interface teams use every day.
               </p>
 
               <div className="my-6 h-px w-full bg-white/[0.06]" />
 
               <p className="text-base leading-relaxed text-zinc-300">
-                Recently I've contributed to{" "}
-                <span className="font-medium text-white">
-                  FleetTrack
-                </span>{" "}
-                for real-time GPS tracking,{" "}
-                <span className="font-medium text-violet-300">
-                  ERP HR & Emarath ERP
-                </span>{" "}
-                enterprise solutions, WooCommerce integrations, REST APIs,
-                authentication systems, WebSocket-based real-time features, and
-                database-driven applications. I enjoy solving complex business
-                challenges by building secure backend services, scalable APIs,
-                and intuitive user interfaces.
+                I work across the stack with intent — modeling data in
+                PostgreSQL and MongoDB, building secure REST APIs with{" "}
+                <span className="font-medium text-indigo-300">
+                  role-based access control
+                </span>
+                , adding real-time features with{" "}
+                <span className="font-medium text-violet-300">Socket.IO</span>,
+                and shipping responsive Next.js frontends. I optimize for the
+                next engineer: clear boundaries, predictable APIs, and code
+                that&apos;s straightforward to extend.
               </p>
 
               <div className="mt-7 flex flex-wrap gap-2">
@@ -125,9 +117,10 @@ export default function About() {
                 </p>
 
                 <p className="mt-0.5 text-xs text-zinc-500">
-                  Developing Emarath ERP, building scalable enterprise
-                  applications, improving business workflows, and exploring AI
-                  integrations and automation solutions.
+                  Building Emarath ERP and internal enterprise tooling —
+                  shipping new modules, tightening business workflows, and
+                  adding AI-assisted automation where it removes real manual
+                  work.
                 </p>
               </div>
             </div>

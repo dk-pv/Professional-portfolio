@@ -29,11 +29,11 @@ export default function ContactCTA() {
           <p className="eyebrow mb-5 justify-center">Get In Touch</p>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-5xl">
             Let&apos;s build something{" "}
-            <span className="text-gradient">exceptional</span>
+            <span className="text-gradient">that ships</span>
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-zinc-400">
-            I&apos;m always open to discussing new projects, creative ideas or
-            opportunities to be part of an ambitious team.
+            Open to full-stack roles, enterprise projects and technical
+            collaboration. Let&apos;s talk about what you&apos;re building.
           </p>
 
           <div className="mt-10 flex flex-wrap justify-center gap-4">

@@ -25,8 +25,8 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-semibold text-white">Danish Pv</h3>
             <p className="mx-auto mt-3 max-w-xs text-sm text-zinc-400 md:mx-0">
-              Full Stack Developer building scalable web applications and modern
-              digital experiences.
+              Full Stack Developer building enterprise applications, ERP systems
+              and real-time platforms.
             </p>
           </div>
 

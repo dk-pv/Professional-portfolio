@@ -5,7 +5,7 @@ import FooterSimple from "@/components/ui/FooterSimple";
 export const metadata: Metadata = {
   title: "Skills",
   description:
-    "The technologies Danish Pv works with — React, Next.js, Node.js, MongoDB, and the full MERN toolchain.",
+    "The technologies Danish Pv works with — React, Next.js, TypeScript, NestJS, Node.js, PostgreSQL, MongoDB, Prisma, Socket.IO and Tailwind CSS.",
 };
 
 export default function SkillsPage() {

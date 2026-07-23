@@ -6,7 +6,7 @@ import FooterSimple from "@/components/ui/FooterSimple";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "About Danish Pv — a Full Stack Developer specializing in the MERN stack, with experience across booking systems, dashboards and cloud deployment.",
+    "About Danish Pv — a Full Stack Developer with 2+ years building enterprise ERP systems, real-time platforms and scalable web applications with NestJS, Next.js, PostgreSQL and MongoDB.",
 };
 
 export default function AboutPage() {
