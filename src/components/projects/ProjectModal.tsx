@@ -4,7 +4,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { X, ExternalLink, Github, ChevronLeft, ChevronRight, CheckCircle2, Cpu, ArrowRight } from "lucide-react";
+import {
+  X,
+  ExternalLink,
+  Github,
+  ChevronLeft,
+  ChevronRight,
+  CheckCircle2,
+  Cpu,
+  ArrowRight,
+} from "lucide-react";
 
 export default function ProjectModal({
   project,
@@ -17,190 +26,143 @@ export default function ProjectModal({
   const [imgIndex, setImgIndex] = useState(0);
 
   const isApp = project.category === "application";
-  const images = isApp ? (project.images?.[mode] ?? []) : [project.image];
+  const images: string[] = isApp
+    ? project.images?.[mode] ?? []
+    : [project.image];
 
-  // Reset image index on mode change
   useEffect(() => setImgIndex(0), [mode]);
 
-  // Close on Escape
+  // Close on Escape + lock background scroll while open
   useEffect(() => {
     const handler = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", handler);
+      document.body.style.overflow = prevOverflow;
+    };
   }, [onClose]);
 
-  const prevImg = () => setImgIndex((p) => (p === 0 ? images.length - 1 : p - 1));
-  const nextImg = () => setImgIndex((p) => (p === images.length - 1 ? 0 : p + 1));
+  const prevImg = () =>
+    setImgIndex((p) => (p === 0 ? images.length - 1 : p - 1));
+  const nextImg = () =>
+    setImgIndex((p) => (p === images.length - 1 ? 0 : p + 1));
 
   return (
     <AnimatePresence>
-      {/* Backdrop */}
       <motion.div
-        className="fixed inset-0 z-[9998]"
+        className="fixed inset-0 z-[9998] bg-black/80 backdrop-blur-sm"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
         onClick={onClose}
-        style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(12px)" }}
       />
 
-      {/* Modal */}
-      <motion.div
-        className="fixed inset-0 z-[9999] flex items-center justify-center px-4 py-8 pointer-events-none"
-      >
+      <div className="pointer-events-none fixed inset-0 z-[9999] flex items-center justify-center px-4 py-8">
         <motion.div
-          initial={{ scale: 0.88, opacity: 0, y: 40 }}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${project.title} details`}
+          initial={{ scale: 0.96, opacity: 0, y: 16 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.88, opacity: 0, y: 40 }}
-          transition={{ duration: 0.4, ease: [0.215, 0.61, 0.355, 1] }}
-          className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-3xl pointer-events-auto flex flex-col"
-          style={{
-            background: "#080808",
-            border: "1px solid rgba(245,158,11,0.2)",
-            boxShadow: "0 0 80px rgba(245,158,11,0.08), 0 40px 120px rgba(0,0,0,0.8)",
-          }}
+          exit={{ scale: 0.96, opacity: 0, y: 16 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="pointer-events-auto flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#111113] shadow-2xl shadow-black/60"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Top gradient accent */}
-          <div
-            className="absolute top-0 left-12 right-12 h-px z-10"
-            style={{
-              background: "linear-gradient(90deg, transparent, #f59e0b, #06b6d4, transparent)",
-            }}
-          />
-
-          {/* ── HEADER (sticky) ── */}
-          <div
-            className="flex-shrink-0 px-8 pt-7 pb-5"
-            style={{ borderBottom: "1px solid rgba(245,158,11,0.08)" }}
-          >
+          {/* Header */}
+          <div className="flex-shrink-0 border-b border-white/[0.06] px-8 pb-5 pt-7">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <span
-                  className="text-xs font-mono tracking-widest uppercase mb-2 block"
-                  style={{ color: "#f59e0b" }}
-                >
+                <span className="mb-2 block text-xs font-medium uppercase tracking-widest text-indigo-300">
                   {project.category}
                 </span>
-                <h2 className="text-2xl md:text-3xl font-black" style={{ color: "#e2e8f0" }}>
+                <h2 className="text-2xl font-semibold text-white md:text-3xl">
                   {project.title}
                 </h2>
               </div>
 
-              <motion.button
+              <button
                 onClick={onClose}
-                whileHover={{ scale: 1.1, rotate: 90 }}
-                whileTap={{ scale: 0.9 }}
-                transition={{ duration: 0.2 }}
-                className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  color: "#94a3b8",
-                }}
+                aria-label="Close"
+                className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-zinc-400 transition-colors hover:bg-white/10 hover:text-white"
               >
-                <X className="w-4 h-4" />
-              </motion.button>
+                <X className="h-4 w-4" />
+              </button>
             </div>
 
-            {/* User / Admin toggle */}
             {isApp && (
-              <div className="flex gap-2 mt-5">
+              <div className="mt-5 flex gap-2">
                 {(["user", "admin"] as const).map((m) => (
-                  <motion.button
+                  <button
                     key={m}
                     onClick={() => setMode(m)}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-5 py-2 rounded-xl text-sm font-semibold capitalize transition-all duration-300"
-                    style={
+                    className={`rounded-xl px-5 py-2 text-sm font-medium capitalize transition-colors duration-200 ${
                       mode === m
-                        ? {
-                            background: "linear-gradient(135deg, #f59e0b, #fbbf24)",
-                            color: "#000",
-                            boxShadow: "0 0 20px rgba(245,158,11,0.3)",
-                          }
-                        : {
-                            background: "rgba(255,255,255,0.04)",
-                            border: "1px solid rgba(255,255,255,0.08)",
-                            color: "#64748b",
-                          }
-                    }
+                        ? "bg-indigo-500 text-white"
+                        : "border border-white/10 bg-white/[0.03] text-zinc-400 hover:text-white"
+                    }`}
                   >
-                    {m === "user" ? "👤 User View" : "🛡️ Admin View"}
-                  </motion.button>
+                    {m === "user" ? "User View" : "Admin View"}
+                  </button>
                 ))}
               </div>
             )}
           </div>
 
-          {/* ── SCROLLABLE BODY ── */}
-          <div className="flex-1 overflow-y-auto scrollbar-thin px-8 py-7 space-y-10">
-
-            {/* ── Image Carousel ── */}
-            <div className="relative rounded-2xl overflow-hidden bg-black" style={{ height: 280 }}>
+          {/* Body */}
+          <div className="flex-1 space-y-10 overflow-y-auto px-8 py-7">
+            {/* Carousel */}
+            <div className="relative h-[280px] overflow-hidden rounded-2xl bg-black">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`${mode}-${imgIndex}`}
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -30 }}
-                  transition={{ duration: 0.35 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25 }}
                   className="absolute inset-0"
                 >
                   <Image
                     src={images[imgIndex] ?? project.image}
                     alt={project.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, 768px"
                     className="object-cover"
-                  />
-                  {/* Image overlay gradient */}
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background:
-                        "linear-gradient(to top, rgba(8,8,8,0.6) 0%, transparent 50%)",
-                    }}
                   />
                 </motion.div>
               </AnimatePresence>
 
-              {/* Carousel nav (only if > 1 image) */}
               {images.length > 1 && (
                 <>
                   <button
                     onClick={prevImg}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-xl flex items-center justify-center z-10"
-                    style={{
-                      background: "rgba(0,0,0,0.6)",
-                      border: "1px solid rgba(245,158,11,0.25)",
-                      color: "#f59e0b",
-                    }}
+                    aria-label="Previous image"
+                    className="absolute left-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-xl border border-white/10 bg-black/60 text-white transition-colors hover:bg-black/80"
                   >
-                    <ChevronLeft className="w-4 h-4" />
+                    <ChevronLeft className="h-4 w-4" />
                   </button>
                   <button
                     onClick={nextImg}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-xl flex items-center justify-center z-10"
-                    style={{
-                      background: "rgba(0,0,0,0.6)",
-                      border: "1px solid rgba(245,158,11,0.25)",
-                      color: "#f59e0b",
-                    }}
+                    aria-label="Next image"
+                    className="absolute right-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-xl border border-white/10 bg-black/60 text-white transition-colors hover:bg-black/80"
                   >
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronRight className="h-4 w-4" />
                   </button>
 
-                  {/* Dot indicators */}
-                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-                    {images.map((_: any, i: number) => (
+                  <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
+                    {images.map((_, i) => (
                       <button
                         key={i}
                         onClick={() => setImgIndex(i)}
-                        className="rounded-full transition-all duration-300"
+                        aria-label={`Go to image ${i + 1}`}
+                        className="h-1.5 rounded-full transition-all duration-300"
                         style={{
                           width: i === imgIndex ? 20 : 6,
-                          height: 6,
-                          background: i === imgIndex ? "#f59e0b" : "rgba(255,255,255,0.3)",
+                          background:
+                            i === imgIndex ? "#6366f1" : "rgba(255,255,255,0.3)",
                         }}
                       />
                     ))}
@@ -208,114 +170,70 @@ export default function ProjectModal({
                 </>
               )}
 
-              {/* Mode label */}
               {isApp && (
-                <div
-                  className="absolute top-3 right-3 text-xs font-mono px-2.5 py-1 rounded-lg capitalize z-10"
-                  style={{
-                    background: "rgba(0,0,0,0.75)",
-                    border: `1px solid ${mode === "user" ? "rgba(245,158,11,0.3)" : "rgba(6,182,212,0.3)"}`,
-                    color: mode === "user" ? "#f59e0b" : "#06b6d4",
-                  }}
-                >
+                <span className="absolute right-3 top-3 z-10 rounded-lg border border-white/10 bg-black/70 px-2.5 py-1 text-xs font-medium capitalize text-zinc-300">
                   {mode} view
-                </div>
+                </span>
               )}
             </div>
 
-            {/* ── Description ── */}
-            <div>
-              <p className="text-sm leading-relaxed" style={{ color: "#94a3b8" }}>
-                {project.description}
-              </p>
-            </div>
+            {/* Description */}
+            <p className="text-sm leading-relaxed text-zinc-400">
+              {project.description}
+            </p>
 
-            {/* ── Tech Stack ── */}
+            {/* Tech */}
             <div>
-              <h3
-                className="text-xs font-mono tracking-widest uppercase mb-3"
-                style={{ color: "#f59e0b" }}
-              >
+              <h3 className="mb-3 text-xs font-medium uppercase tracking-widest text-indigo-300">
                 Tech Stack
               </h3>
               <div className="flex flex-wrap gap-2">
-                {project.tech.map((tech: string, i: number) => (
-                  <span
-                    key={i}
-                    className="px-3 py-1.5 text-xs font-mono rounded-full"
-                    style={{
-                      background: "rgba(6,182,212,0.08)",
-                      border: "1px solid rgba(6,182,212,0.2)",
-                      color: "#06b6d4",
-                    }}
-                  >
+                {project.tech.map((tech: string) => (
+                  <span key={tech} className="pill pill-accent">
                     {tech}
                   </span>
                 ))}
               </div>
             </div>
 
-            {/* ── Features ── */}
+            {/* Features */}
             {isApp && project.features?.[mode] && (
               <div>
-                <h3
-                  className="text-xs font-mono tracking-widest uppercase mb-4"
-                  style={{ color: mode === "user" ? "#f59e0b" : "#06b6d4" }}
-                >
-                  {mode === "user" ? "👤 User Features" : "🛡️ Admin Features"}
+                <h3 className="mb-4 text-xs font-medium uppercase tracking-widest text-indigo-300">
+                  {mode === "user" ? "User Features" : "Admin Features"}
                 </h3>
-                <div className="grid sm:grid-cols-2 gap-2.5">
+                <div className="grid gap-2.5 sm:grid-cols-2">
                   {project.features[mode].map((f: string, i: number) => (
-                    <motion.div
+                    <div
                       key={i}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.04 }}
-                      className="flex items-start gap-2.5 p-3 rounded-xl"
-                      style={{
-                        background: "rgba(255,255,255,0.02)",
-                        border: `1px solid ${mode === "user" ? "rgba(245,158,11,0.1)" : "rgba(6,182,212,0.1)"}`,
-                      }}
+                      className="flex items-start gap-2.5 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"
                     >
-                      <CheckCircle2
-                        className="w-3.5 h-3.5 mt-0.5 flex-shrink-0"
-                        style={{ color: mode === "user" ? "#f59e0b" : "#06b6d4" }}
-                      />
-                      <span className="text-xs leading-relaxed" style={{ color: "#94a3b8" }}>
+                      <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-indigo-400" />
+                      <span className="text-xs leading-relaxed text-zinc-400">
                         {f}
                       </span>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* ── Case Study preview ── */}
+            {/* Case study */}
             {project.caseStudy && (
-              <div
-                className="rounded-2xl p-6 space-y-5"
-                style={{
-                  background: "rgba(255,255,255,0.02)",
-                  border: "1px solid rgba(245,158,11,0.1)",
-                }}
-              >
-                <h3
-                  className="text-xs font-mono tracking-widest uppercase"
-                  style={{ color: "#f59e0b" }}
-                >
+              <div className="space-y-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6">
+                <h3 className="text-xs font-medium uppercase tracking-widest text-indigo-300">
                   Case Study Preview
                 </h3>
-
                 {[
                   { label: "Problem", text: project.caseStudy.problem },
                   { label: "Solution", text: project.caseStudy.solution },
                   { label: "Result", text: project.caseStudy.result },
                 ].map(({ label, text }) => (
                   <div key={label}>
-                    <p className="text-xs font-semibold mb-1" style={{ color: "#06b6d4" }}>
+                    <p className="mb-1 text-xs font-semibold text-violet-300">
                       {label}
                     </p>
-                    <p className="text-xs leading-relaxed" style={{ color: "#64748b" }}>
+                    <p className="text-xs leading-relaxed text-zinc-500">
                       {text}
                     </p>
                   </div>
@@ -323,96 +241,62 @@ export default function ProjectModal({
               </div>
             )}
 
-            {/* ── Architecture ── */}
+            {/* Architecture */}
             {project.caseStudy?.architecture && (
               <div>
-                <h3
-                  className="text-xs font-mono tracking-widest uppercase mb-4 flex items-center gap-2"
-                  style={{ color: "#f59e0b" }}
-                >
-                  <Cpu className="w-3.5 h-3.5" />
+                <h3 className="mb-4 flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-indigo-300">
+                  <Cpu className="h-3.5 w-3.5" />
                   Architecture
                 </h3>
                 <div className="space-y-2">
-                  {project.caseStudy.architecture.map((item: string, i: number) => (
-                    <div
-                      key={i}
-                      className="flex items-start gap-3 p-3 rounded-xl"
-                      style={{
-                        background: "rgba(6,182,212,0.04)",
-                        border: "1px solid rgba(6,182,212,0.1)",
-                      }}
-                    >
+                  {project.caseStudy.architecture.map(
+                    (it: string, i: number) => (
                       <div
-                        className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
-                        style={{ background: "#06b6d4" }}
-                      />
-                      <span className="text-xs leading-relaxed" style={{ color: "#64748b" }}>
-                        {item}
-                      </span>
-                    </div>
-                  ))}
+                        key={i}
+                        className="flex items-start gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"
+                      >
+                        <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-violet-400" />
+                        <span className="text-xs leading-relaxed text-zinc-500">
+                          {it}
+                        </span>
+                      </div>
+                    ),
+                  )}
                 </div>
               </div>
             )}
           </div>
 
-          {/* ── FOOTER (sticky) ── */}
-          <div
-            className="flex-shrink-0 px-8 py-5 flex flex-wrap items-center gap-3"
-            style={{ borderTop: "1px solid rgba(245,158,11,0.08)" }}
-          >
-            <Link href={`/projects/${project.slug}`}>
-              <motion.button
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-black"
-                style={{
-                  background: "linear-gradient(135deg, #f59e0b, #fbbf24)",
-                  boxShadow: "0 0 25px rgba(245,158,11,0.35)",
-                }}
-              >
-                Full Case Study
-                <ArrowRight className="w-3.5 h-3.5" />
-              </motion.button>
+          {/* Footer */}
+          <div className="flex flex-shrink-0 flex-wrap items-center gap-3 border-t border-white/[0.06] px-8 py-5">
+            <Link
+              href={`/projects/${project.slug}`}
+              className="btn btn-primary"
+            >
+              Full Case Study
+              <ArrowRight className="h-3.5 w-3.5" />
             </Link>
-
-            <motion.a
+            <a
               href={project.live}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold"
-              style={{
-                background: "rgba(6,182,212,0.08)",
-                border: "1px solid rgba(6,182,212,0.25)",
-                color: "#06b6d4",
-              }}
+              className="btn btn-ghost"
             >
-              <ExternalLink className="w-3.5 h-3.5" />
+              <ExternalLink className="h-3.5 w-3.5" />
               Live Site
-            </motion.a>
-
-            <motion.a
+            </a>
+            <a
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold"
-              style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                color: "#64748b",
-              }}
+              className="btn btn-ghost"
             >
-              <Github className="w-3.5 h-3.5" />
+              <Github className="h-3.5 w-3.5" />
               GitHub
-            </motion.a>
+            </a>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
     </AnimatePresence>
   );
 }

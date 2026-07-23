@@ -1,169 +1,190 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
-  { label: "About", href: "about" },
-  { label: "Skills", href: "skills" },
-  { label: "Projects", href: "projects" },
-  { label: "Contact", href: "contact" },
+  { label: "About", id: "about" },
+  { label: "Skills", id: "skills" },
+  { label: "Projects", id: "projects" },
+  { label: "Contact", id: "contact" },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const scrolledRef = useRef(false);
+  const hiddenRef = useRef(false);
+  const lastYRef = useRef(0);
+  const tickingRef = useRef(false);
 
-  /* ── Shrink navbar on scroll ── */
+  /* Shrink + hide-on-scroll-down / show-on-scroll-up.
+     rAF-throttled and ref-guarded so setState only fires on real changes. */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const update = () => {
+      const y = window.scrollY;
+
+      const nextScrolled = y > 24;
+      if (nextScrolled !== scrolledRef.current) {
+        scrolledRef.current = nextScrolled;
+        setScrolled(nextScrolled);
+      }
+
+      let nextHidden = hiddenRef.current;
+      if (y < 80) nextHidden = false;
+      else if (y > lastYRef.current + 6) nextHidden = true;
+      else if (y < lastYRef.current - 6) nextHidden = false;
+
+      if (nextHidden !== hiddenRef.current) {
+        hiddenRef.current = nextHidden;
+        setHidden(nextHidden);
+      }
+
+      lastYRef.current = y;
+      tickingRef.current = false;
+    };
+
+    const onScroll = () => {
+      if (!tickingRef.current) {
+        tickingRef.current = true;
+        requestAnimationFrame(update);
+      }
+    };
+
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  /* ── Active section via IntersectionObserver ── */
+  /* Active section via a single IntersectionObserver */
   useEffect(() => {
-    const ids = NAV_LINKS.map((l) => l.href.replace("#", ""));
-    const observers: IntersectionObserver[] = [];
+    const sections = NAV_LINKS.map((l) => document.getElementById(l.id)).filter(
+      Boolean,
+    ) as HTMLElement[];
+    if (sections.length === 0) return;
 
-    ids.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
+    );
 
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActiveSection(id);
-        },
-        { threshold: 0.35 },
-      );
-
-      obs.observe(el);
-      observers.push(obs);
-    });
-
-    return () => observers.forEach((o) => o.disconnect());
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
   }, []);
-
-  const handleNavClick = (href: string) => {
-    setMobileOpen(false);
-    const el = document.querySelector(href);
-    el?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <>
-      {/* ── Desktop Navbar ── */}
+      <div className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
       <motion.nav
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`
-          fixed top-5 left-1/2 -translate-x-1/2 z-50
-          flex items-center gap-2
-          rounded-full border border-white/10
-          px-3 py-2
-          transition-all duration-300
-          ${
-            scrolled
-              ? "backdrop-blur-2xl bg-[#020617]/80 shadow-xl shadow-black/30"
-              : "backdrop-blur-xl bg-white/5"
-          }
-        `}
+        initial={{ y: -70, opacity: 0 }}
+        animate={{
+          y: hidden && !mobileOpen ? -96 : 0,
+          opacity: 1,
+        }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className={`pointer-events-auto flex items-center rounded-full glass transition-[gap,padding,box-shadow] duration-300 ${
+          scrolled
+            ? "gap-1 px-2 py-1.5 shadow-lg shadow-black/40"
+            : "gap-1.5 px-3 py-2"
+        }`}
+        aria-label="Primary"
       >
-        {/* Logo / Name */}
-        <a
+        {/* Logo */}
+        <Link
           href="/"
-          onClick={(e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-          className="mr-3 px-3 py-1 font-[Syne] font-bold text-sm text-white tracking-tight hover:text-indigo-400 transition-colors"
+          onClick={() => setMobileOpen(false)}
+          className="mr-1 rounded-full px-3 py-1 text-sm font-bold tracking-tight text-white transition-colors hover:text-indigo-300"
+          aria-label="Home"
         >
           D<span className="text-indigo-400">K</span>
-        </a>
+        </Link>
 
-        {/* Divider */}
-        <div className="w-px h-4 bg-white/10 mr-2" />
+        <span className="mx-1 hidden h-4 w-px bg-white/10 md:block" />
 
-        {/* Links */}
-        {NAV_LINKS.map((link) => {
-          const isActive = activeSection === link.href.replace("#", "");
-          return (
-            <button
-              key={link.label}
-              onClick={() => handleNavClick(link.href)}
-              className={`
-                relative px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200
-                ${
-                  isActive
-                    ? "text-white bg-indigo-500/20 border border-indigo-500/40"
-                    : "text-gray-400 hover:text-white"
-                }
-              `}
-            >
-              {isActive && (
-                <motion.span
-                  layoutId="nav-pill"
-                  className="absolute inset-0 rounded-full bg-indigo-500/15 border border-indigo-500/30"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-              <span className="relative z-10">{link.label}</span>
-            </button>
-          );
-        })}
+        {/* Desktop links */}
+        <div className="hidden items-center gap-1 md:flex">
+          {NAV_LINKS.map((link) => {
+            const isActive = activeSection === link.id;
+            return (
+              <Link
+                key={link.id}
+                href={`/#${link.id}`}
+                className={`relative rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-200 ${
+                  isActive ? "text-white" : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 rounded-full border border-indigo-400/30 bg-indigo-500/15"
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  />
+                )}
+                <span className="relative z-10">{link.label}</span>
+              </Link>
+            );
+          })}
+        </div>
 
-        {/* Divider */}
-        <div className="w-px h-4 bg-white/10 ml-2" />
+        <span className="mx-1 hidden h-4 w-px bg-white/10 md:block" />
 
         {/* Resume CTA */}
         <a
           href="/resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
-          className="ml-2 px-4 py-1.5 rounded-full text-sm font-semibold bg-indigo-500 text-white hover:bg-indigo-400 transition-colors duration-200 shadow-lg shadow-indigo-500/25"
+          className="hidden rounded-full bg-indigo-500 px-4 py-1.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-colors duration-200 hover:bg-indigo-400 md:inline-block"
         >
           Resume ↗
         </a>
 
-        {/* Mobile hamburger */}
+        {/* Mobile toggle */}
         <button
           onClick={() => setMobileOpen((p) => !p)}
-          className="md:hidden ml-2 p-2 rounded-full hover:bg-white/10 transition"
-          aria-label="Toggle menu"
+          className="rounded-full p-2 text-white transition hover:bg-white/10 md:hidden"
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileOpen}
         >
-          <span className="block w-4 h-px bg-white mb-1" />
-          <span className="block w-4 h-px bg-white mb-1" />
-          <span className="block w-2 h-px bg-white" />
+          {mobileOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
       </motion.nav>
+      </div>
 
-      {/* ── Mobile drawer ── */}
+      {/* Mobile drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             key="mobile-menu"
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden fixed top-20 left-4 right-4 z-40 rounded-2xl border border-white/10 backdrop-blur-2xl bg-[#020617]/90 p-4 flex flex-col gap-2"
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="glass fixed left-4 right-4 top-20 z-40 flex flex-col gap-1 rounded-2xl p-3 md:hidden"
           >
             {NAV_LINKS.map((link) => (
-              <button
-                key={link.label}
-                onClick={() => handleNavClick(link.href)}
-                className="text-left px-4 py-3 rounded-xl text-sm text-gray-300 hover:text-white hover:bg-white/5 transition"
+              <Link
+                key={link.id}
+                href={`/#${link.id}`}
+                onClick={() => setMobileOpen(false)}
+                className="rounded-xl px-4 py-3 text-sm text-zinc-300 transition hover:bg-white/5 hover:text-white"
               >
                 {link.label}
-              </button>
+              </Link>
             ))}
-
             <a
               href="/resume.pdf"
               target="_blank"
-              className="mt-1 px-4 py-3 rounded-xl text-sm font-semibold bg-indigo-500 text-white text-center"
+              rel="noopener noreferrer"
+              onClick={() => setMobileOpen(false)}
+              className="mt-1 rounded-xl bg-indigo-500 px-4 py-3 text-center text-sm font-semibold text-white"
             >
               Resume ↗
             </a>
