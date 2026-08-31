@@ -3,30 +3,30 @@ import SectionHeader from "@/components/ui/SectionHeader";
 const experiences = [
   {
     year: "2025 — Present",
-    company: "SDEC — Calicut Business Park",
+    company: "Shahi Solutions",
     role: "Full Stack Developer",
     location: "Calicut, Kerala",
     description:
-      "Building enterprise applications end to end — including Emarath ERP, the FleetTrack real-time vehicle tracking platform and a multi-module enterprise ERP workspace. Design scalable REST APIs with NestJS and PostgreSQL, implement real-time features with Socket.IO and WebSockets, and develop responsive Next.js frontends with role-based access control.",
-    tags: ["Next.js", "NestJS", "PostgreSQL", "Prisma", "Socket.IO", "REST APIs", "RBAC"],
+      "Own end-to-end development of production applications — Emarath ERP, a CRM-centered ERP for lead management and sales operations; the SDEC company ERP with its attendance-to-payroll pipeline; and the FleetTrack real-time fleet-tracking platform. I design the PostgreSQL schemas and REST APIs, build real-time features with Socket.IO, and ship the Next.js frontends with role-based access control.",
+    tags: ["Next.js", "NestJS", "Express.js", "PostgreSQL", "Prisma", "Socket.IO", "RBAC"],
   },
   {
     year: "2024 — 2025",
     company: "BridgeOn Solution",
-    role: "Full Stack Developer Intern",
-    location: "Remote",
+    role: "Full Stack Developer",
+    location: "Manjeri, Kerala",
     description:
-      "Developed production full-stack applications including job portals and educational platforms. Built REST APIs, JWT authentication and real-time features with Socket.IO, and implemented responsive React and Next.js interfaces backed by Node.js, Express and MongoDB.",
-    tags: ["React", "Next.js", "Node.js", "Express.js", "MongoDB", "Socket.IO", "JWT"],
+      "Developed and shipped full-stack job portal and educational platforms in an Agile environment — secure REST APIs, authentication with JWT, OAuth and OTP verification, role-based access control, and real-time features with Socket.IO, on React and Next.js frontends over Node.js, Express and MongoDB.",
+    tags: ["React", "Next.js", "Node.js", "Express.js", "MongoDB", "Socket.IO", "JWT", "OAuth"],
   },
   {
     year: "2024 — Present",
-    company: "Freelance & Independent Projects",
+    company: "Freelance & Client Projects",
     role: "Full Stack Developer",
     location: "Remote",
     description:
-      "Delivered full-stack web applications and e-commerce builds for clients. Handled API and payment-gateway integrations, performance optimization, and end-to-end deployment — Vercel and Railway for applications, plus domain, SSL and CI/CD configuration via GitHub.",
-    tags: ["REST APIs", "Cloudinary", "Vercel", "Railway", "CI/CD", "Performance"],
+      "Built full-stack sites and applications for clients — VRS RealInvest, Royal Limoxy, Fetch Kids and MoodByteal — handling REST APIs, media pipelines, payment-gateway integrations, performance work and deployment with domain, SSL and CI/CD configuration.",
+    tags: ["REST APIs", "Cloudinary", "Vercel", "Railway", "CI/CD"],
   },
 ];
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/contact/ContactForm";
-import FooterSimple from "@/components/ui/FooterSimple";
+import Footer from "@/components/footer/Footer";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -74,7 +74,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <FooterSimple />
+      <Footer />
     </>
   );
 }

@@ -5,7 +5,7 @@ const TECH = ["Next.js", "TypeScript", "NestJS", "PostgreSQL", "Socket.IO"];
 
 export default function Hero() {
   return (
-    <section id="home" className="wrap pb-20 pt-32 md:pb-28 md:pt-40">
+    <section id="home" className="wrap pb-8 pt-32 md:pb-12 md:pt-40">
       <div className="grid items-end gap-12 md:grid-cols-[1.6fr_1fr] md:gap-16">
         {/* ── Left: statement ── */}
         <div className="enter">
@@ -24,9 +24,9 @@ export default function Hero() {
           </p>
 
           <p className="mt-5 max-w-xl text-base leading-relaxed text-[var(--ink-2)]">
-            Comfortable across the stack: API and schema design, role-based
-            access control, real-time systems, and the interfaces teams use
-            daily.
+            Most of my time goes into the parts you don&apos;t see: schema
+            design, role-based access control, and keeping live data
+            consistent over WebSockets.
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">

@@ -94,9 +94,9 @@ p {
 /* Mono index label: "01 / About" */
 .mono-label {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.8125rem; /* 13px — small-metadata legibility floor */
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--ink-2);
 }
@@ -169,13 +169,15 @@ p {
   border-color: var(--ink);
 }
 
-/* Screenshot frame — thin border, no overlay, restrained hover */
+/* Screenshot frame — thin border, no overlay, restrained hover.
+   Warm neutral ground doubles as the loading placeholder, so lazy
+   images never read as stark white voids and reserve their box. */
 .frame {
   position: relative;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 4px;
-  background: #fff;
+  background: #efede7;
 }
 .frame img {
   transition: transform 0.5s var(--ease);

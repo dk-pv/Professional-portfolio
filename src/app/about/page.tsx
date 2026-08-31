@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import About from "@/components/about/About";
 import Experience from "@/components/experience/Experience";
-import FooterSimple from "@/components/ui/FooterSimple";
+import Footer from "@/components/footer/Footer";
 
 export const metadata: Metadata = {
   title: "About",
@@ -17,7 +17,7 @@ export default function AboutPage() {
         <About titleAs="h1" />
         <Experience showIndex={false} />
       </div>
-      <FooterSimple />
+      <Footer />
     </>
   );
 }

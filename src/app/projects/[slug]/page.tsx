@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { projects, type Project } from "@/lib/projects";
-import FooterSimple from "@/components/ui/FooterSimple";
+import Footer from "@/components/footer/Footer";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -16,25 +16,24 @@ export function generateMetadata({
 }): Metadata {
   const project = projects.find((p) => p.slug === params.slug);
   if (!project) return { title: "Project" };
+  // Meta description: first sentence only (SERPs truncate ~155 chars).
+  const metaDescription = project.description.split(". ")[0].replace(/\.$/, "") + ".";
   return {
     title: project.title,
-    description: project.description,
+    description: metaDescription,
     alternates: { canonical: `/projects/${params.slug}` },
     openGraph: {
       title: project.title,
-      description: project.description,
+      description: metaDescription,
       images: [{ url: project.image }],
     },
   };
 }
 
-function SectionLabel({ index, label }: { index: string; label: string }) {
+function SectionLabel({ label }: { label: string }) {
   return (
     <div className="rule pt-6">
-      <h2 className="mono-label">
-        <span className="text-[var(--accent)]">{index} / </span>
-        {label}
-      </h2>
+      <h2 className="mono-label">{label}</h2>
     </div>
   );
 }
@@ -57,7 +56,7 @@ function Gallery({
       }`}
     >
       {images.map((img, i) => (
-        <div key={img} className="frame aspect-[16/9]">
+        <div key={img} className="frame aspect-[21/10]">
           <Image
             src={img}
             alt={`${title} — ${kind} screenshot ${i + 1} of ${images.length}`}
@@ -115,10 +114,14 @@ export default function CaseStudyPage({
             {project.description}
           </p>
 
+          <p className="mono-label mt-6 leading-loose text-[var(--ink-3)]">
+            {project.tech.join(" · ")}
+          </p>
+
           <div className="mt-8 flex flex-wrap items-center gap-6 text-sm">
             {isPrivateBuild(project.live) ? (
-              <span className="mono-label">
-                Private / enterprise build — details on request
+              <span className="text-sm text-[var(--ink-2)]">
+                Private enterprise build — details on request
               </span>
             ) : (
               <a
@@ -146,7 +149,7 @@ export default function CaseStudyPage({
         </header>
 
         {/* Hero screenshot */}
-        <div className="frame mt-14 aspect-[16/8]">
+        <div className="frame mt-14 aspect-[21/10]">
           <Image
             src={project.image}
             alt={`${project.title} — main interface`}
@@ -158,17 +161,9 @@ export default function CaseStudyPage({
         </div>
 
         <div className="mt-20 space-y-20">
-          {/* Tech */}
+          {/* Overview */}
           <section>
-            <SectionLabel index="01" label="Technology" />
-            <p className="mono-label mt-6 leading-loose text-[var(--ink-2)]">
-              {project.tech.join(" · ")}
-            </p>
-          </section>
-
-          {/* Case study */}
-          <section>
-            <SectionLabel index="02" label="Case study" />
+            <SectionLabel label="Overview" />
             <div className="mt-8 grid gap-10 lg:grid-cols-3 lg:gap-8">
               {[
                 { label: "Problem", text: project.caseStudy.problem },
@@ -185,7 +180,7 @@ export default function CaseStudyPage({
 
           {/* Architecture */}
           <section>
-            <SectionLabel index="03" label="Architecture" />
+            <SectionLabel label="Architecture" />
             <ol className="mt-8">
               {project.caseStudy.architecture.map((item, i) => (
                 <li
@@ -203,7 +198,7 @@ export default function CaseStudyPage({
 
           {/* User experience — don't repeat the hero screenshot */}
           <section>
-            <SectionLabel index="04" label="User experience" />
+            <SectionLabel label="User experience" />
             {project.images.user.filter((img) => img !== project.image)
               .length > 0 && (
               <Gallery
@@ -222,7 +217,7 @@ export default function CaseStudyPage({
           {/* Admin */}
           {(project.features.admin?.length ?? 0) > 0 && (
             <section>
-              <SectionLabel index="05" label="Admin experience" />
+              <SectionLabel label="Admin experience" />
               {(project.images.admin?.length ?? 0) > 0 && (
                 <Gallery
                   images={project.images.admin ?? []}
@@ -237,7 +232,7 @@ export default function CaseStudyPage({
           {/* Admin workflow (where documented) */}
           {(project.caseStudy.detailedAdminFlow?.length ?? 0) > 0 && (
             <section>
-              <SectionLabel index="06" label="Admin workflow" />
+              <SectionLabel label="Admin workflow" />
               <ol className="mt-8">
                 {(project.caseStudy.detailedAdminFlow ?? []).map((step, i) => (
                   <li
@@ -291,7 +286,7 @@ export default function CaseStudyPage({
         </div>
       </article>
 
-      <FooterSimple />
+      <Footer />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import SkillsSection from "@/components/skills/SkillsOrbit";
-import FooterSimple from "@/components/ui/FooterSimple";
+import SkillsSection from "@/components/skills/SkillsSection";
+import Footer from "@/components/footer/Footer";
 
 export const metadata: Metadata = {
   title: "Skills",
@@ -15,7 +15,7 @@ export default function SkillsPage() {
       <div className="pt-16">
         <SkillsSection titleAs="h1" />
       </div>
-      <FooterSimple />
+      <Footer />
     </>
   );
 }

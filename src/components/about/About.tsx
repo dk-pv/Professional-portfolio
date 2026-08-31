@@ -6,7 +6,7 @@ const facts = [
   { label: "Focus", value: "Enterprise & ERP systems" },
   { label: "Backend", value: "NestJS · Node.js" },
   { label: "Data", value: "PostgreSQL · MongoDB" },
-  { label: "Currently", value: "Emarath ERP & internal tooling" },
+  { label: "Currently", value: "Emarath ERP & the SDEC company ERP" },
 ];
 
 export default function About({ titleAs = "h2" }: { titleAs?: "h1" | "h2" }) {
@@ -23,25 +23,25 @@ export default function About({ titleAs = "h2" }: { titleAs?: "h1" | "h2" }) {
         {/* Left: narrative */}
         <div className="space-y-6 text-[17px] leading-relaxed">
           <p className="text-xl leading-relaxed text-[var(--ink)]">
-            I build the systems businesses run on — ERP platforms, real-time
-            tracking and internal tooling used by real teams. My work lives in
-            the parts that are hard to get right: data modeling, access
-            control, real-time reliability, and APIs that stay clean as a
-            product grows.
+            My work lives in the parts that are hard to get right: data
+            modeling, access control, real-time reliability, and APIs that
+            stay clean as a product grows.
           </p>
 
           <p>
-            Over the last two years I&apos;ve shipped enterprise software end
-            to end: Emarath ERP, a multi-module enterprise ERP workspace
-            spanning sales, HR, finance and marketing operations, and
-            FleetTrack — a real-time vehicle-tracking platform that streams
-            live telemetry over WebSockets. I own features from the database
-            schema and API design through to production.
+            Over the last two years I&apos;ve shipped enterprise software:
+            Emarath ERP, a CRM-centered ERP built around lead management and
+            sales operations; the SDEC company ERP, whose modules run sales,
+            development, HR, finance and user management — attendance and
+            payroll included; and FleetTrack — a multi-tenant fleet-tracking
+            platform that streams live vehicle telemetry over Socket.IO. I
+            own features from the database schema and API design through to
+            production.
           </p>
 
           <p>
-            I work across the stack with intent — modeling data in PostgreSQL
-            and MongoDB, building secure REST APIs with role-based access
+            I work across the stack — modeling data in PostgreSQL and
+            MongoDB, building secure REST APIs with role-based access
             control, adding real-time features with Socket.IO, and shipping
             responsive Next.js frontends. I optimize for the next engineer:
             clear boundaries, predictable APIs, and code that&apos;s
