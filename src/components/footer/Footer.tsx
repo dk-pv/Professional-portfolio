@@ -1,75 +1,41 @@
-"use client";
-
-import Link from "next/link";
-import { Github, Linkedin, Mail } from "lucide-react";
-
-const navLinks = [
-  { label: "Home", href: "/#home" },
-  { label: "About", href: "/#about" },
-  { label: "Projects", href: "/#projects" },
-  { label: "Contact", href: "/#contact" },
-];
-
 const socials = [
-  { href: "https://github.com/dk-pv", icon: Github, label: "GitHub" },
-  { href: "https://www.linkedin.com/in/danish-pv/", icon: Linkedin, label: "LinkedIn" },
-  { href: "mailto:danish.pv999@gmail.com", icon: Mail, label: "Email" },
+  { href: "https://github.com/dk-pv", label: "GitHub" },
+  { href: "https://www.linkedin.com/in/danish-pv/", label: "LinkedIn" },
+  { href: "mailto:danish.pv999@gmail.com", label: "Email" },
 ];
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-white/[0.06] px-6 py-16">
-      <div className="mx-auto max-w-7xl">
-        <div className="grid gap-10 text-center md:grid-cols-3 md:text-left">
-          {/* Brand */}
-          <div>
-            <h3 className="text-xl font-semibold text-white">Danish Pv</h3>
-            <p className="mx-auto mt-3 max-w-xs text-sm text-zinc-400 md:mx-0">
-              Full Stack Developer building enterprise applications, ERP systems
-              and real-time platforms.
-            </p>
-          </div>
+    <footer className="rule">
+      <div className="wrap flex flex-col items-start justify-between gap-4 py-10 sm:flex-row sm:items-center">
+        <div>
+          <p className="text-sm font-medium text-[var(--ink)]">Danish Pv</p>
+          <p className="mono-label mt-1 text-[var(--ink-3)]">
+            © {new Date().getFullYear()} · Full Stack Developer
+          </p>
+        </div>
 
-          {/* Navigation */}
-          <div>
-            <h4 className="mb-4 text-sm font-semibold text-white">Navigation</h4>
-            <ul className="space-y-2 text-sm">
-              {navLinks.map((l) => (
-                <li key={l.label}>
-                  <Link
-                    href={l.href}
-                    className="text-zinc-400 transition-colors hover:text-white"
-                  >
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Social */}
-          <div>
-            <h4 className="mb-4 text-sm font-semibold text-white">Connect</h4>
-            <div className="flex justify-center gap-3 md:justify-start">
-              {socials.map(({ href, icon: Icon, label }) => (
+        <ul className="flex gap-6">
+          {socials.map(({ href, label }) => {
+            const external = !href.startsWith("mailto:");
+            return (
+              <li key={label}>
                 <a
-                  key={label}
                   href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-zinc-400 transition-all duration-300 hover:-translate-y-0.5 hover:border-indigo-400/40 hover:text-indigo-300"
+                  {...(external
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                  className="link-u text-sm"
                 >
-                  <Icon size={17} />
+                  {label}
+                  {external && (
+                    <span className="sr-only"> (opens in new tab)</span>
+                  )}
                 </a>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-14 border-t border-white/[0.06] pt-8 text-center text-sm text-zinc-500">
-          © {new Date().getFullYear()} Danish Pv. All rights reserved.
-        </div>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </footer>
   );

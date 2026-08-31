@@ -5,14 +5,15 @@ import FooterSimple from "@/components/ui/FooterSimple";
 export const metadata: Metadata = {
   title: "Skills",
   description:
-    "The technologies Danish Pv works with — React, Next.js, TypeScript, NestJS, Node.js, PostgreSQL, MongoDB, Prisma, Socket.IO and Tailwind CSS.",
+    "Technologies Danish Pv works with — React, Next.js, TypeScript, NestJS, Node.js, PostgreSQL, MongoDB and real-time systems.",
+  alternates: { canonical: "/skills" },
 };
 
 export default function SkillsPage() {
   return (
     <>
       <div className="pt-16">
-        <SkillsSection />
+        <SkillsSection titleAs="h1" />
       </div>
       <FooterSimple />
     </>

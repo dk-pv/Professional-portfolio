@@ -1,4 +1,4 @@
-type Project = {
+export type Project = {
   slug: string;
   title: string;
   category: string;
@@ -14,7 +14,6 @@ type Project = {
   features: {
     user: string[];
     admin?: string[];
-    bookingManagementPage?: string[];
   };
 
   caseStudy: {
@@ -51,11 +50,10 @@ export const projects: Project[] = [
       "TypeScript",
     ],
 
-    image: "/fleettrack.png",
+    image: "/fleettrack.webp",
 
     images: {
-      user: ["/fleettrack-1.png", "/fleettrack-2.png"],
-      admin: ["/fleettrack-admin1.png", "/fleettrack-admin2.png"],
+      user: ["/fleettrack.webp"],
     },
 
     features: {
@@ -105,11 +103,10 @@ export const projects: Project[] = [
 
     tech: ["Next.js", "NestJS", "PostgreSQL", "Prisma", "TypeScript", "Tailwind CSS"],
 
-    image: "/emarath.png",
+    image: "/emarath.webp",
 
     images: {
-      user: ["/emarath-1.png", "/emarath-2.png"],
-      admin: ["/emarath-admin1.png", "/emarath-admin2.png"],
+      user: ["/emarath.webp"],
     },
 
     features: {
@@ -150,50 +147,49 @@ export const projects: Project[] = [
   },
 
   {
-    slug: "erp-hr",
-    title: "ERP HR",
+    slug: "enterprise-erp",
+    title: "Enterprise ERP Platform",
     category: "application",
     description:
-      "HR management system covering employee records, attendance, payroll and reporting. A NestJS + PostgreSQL backend with a Next.js frontend replaces manual, spreadsheet-driven HR processes with an auditable system of record.",
+      "Full-featured enterprise ERP platform that centralizes sales, development, user management, HR, finance and marketing into a single role-based business workspace. Built as a modular NestJS + PostgreSQL backend with a Next.js frontend, designed to support multiple business operations from one system.",
 
     tech: ["Next.js", "NestJS", "PostgreSQL", "Prisma", "JWT", "Tailwind CSS"],
 
-    image: "/erp-hr.png",
+    image: "/enterprise-erp.webp",
 
     images: {
-      user: ["/erp-hr-1.png", "/erp-hr-2.png"],
-      admin: ["/erp-hr-admin1.png", "/erp-hr-admin2.png"],
+      user: ["/enterprise-erp.webp"],
     },
 
     features: {
       user: [
-        "Employee profiles and record management",
-        "Attendance tracking and status views",
-        "Payroll information and summaries",
-        "Personal dashboard with relevant HR data",
-        "Secure authentication and scoped access",
+        "Unified workspace spanning sales, development, HR, finance and marketing modules",
+        "Role-based dashboards scoped to each user's department and permissions",
+        "HR workflows covering employee records, attendance and payroll",
+        "Structured reporting and data views across business functions",
+        "Responsive interface for desktop and mobile",
       ],
       admin: [
-        "Complete employee lifecycle management",
-        "Attendance and payroll administration",
-        "Role and permission management",
-        "HR analytics dashboard and reports",
-        "Secure JWT authentication with role-based access",
+        "Modular architecture — each business function is an isolated module",
+        "Centralized user and role management with fine-grained access control",
+        "Administration across sales, development, finance and marketing operations",
+        "Cross-module reporting from a unified data model",
+        "Secure JWT authentication with role separation",
       ],
     },
 
     caseStudy: {
       problem:
-        "HR ran on spreadsheets — attendance, payroll and employee records were manual, error-prone and hard to report on, with no reliable audit trail.",
+        "The business ran sales, HR, finance and marketing processes in separate, disconnected tools — duplicated data, inconsistent permissions and no single operational view across departments.",
       solution:
-        "I built the data model and APIs behind employee records, attendance and payroll, treating correctness as the priority: validated inputs, consistent state transitions, and aggregation queries that turn raw attendance into payroll-ready and management-facing reports. Access is JWT-secured, with roles separating employee self-service from HR administration.",
+        "I worked on a modular ERP workspace where each business function — sales, development, user management, HR, finance and marketing — lives as its own module over a shared NestJS service layer and PostgreSQL schema. I built module APIs and the access layer that scopes every view and action to a user's role and department, with validated inputs and consistent state transitions so cross-module data stays reliable enough to report on.",
       result:
-        "HR moved off spreadsheets to a single system of record with accurate payroll inputs and on-demand reporting, cutting manual reconciliation and giving management data it can trust.",
+        "Departments moved from scattered tools into one role-scoped workspace with a single source of truth for business data, and the module boundaries let new functions be added without reworking what already runs in production.",
       architecture: [
-        "Backend: NestJS REST APIs with input validation and explicit state management",
-        "Data: PostgreSQL with Prisma ORM and aggregation queries for reporting",
-        "Access: JWT authentication with employee vs. HR-admin role separation",
-        "Frontend: Next.js self-service and administration dashboards",
+        "Architecture: Modular domain design — sales, development, user management, HR, finance and marketing modules over a shared NestJS service layer",
+        "Access: JWT authentication with centralized role-based access control enforced in every module",
+        "Data: PostgreSQL with Prisma ORM and cross-module reporting from a unified model",
+        "Frontend: Next.js workspace with role-scoped module dashboards",
         "Deployment: Vercel and Railway",
       ],
     },
@@ -211,11 +207,11 @@ export const projects: Project[] = [
 
     tech: ["Next.js", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
 
-    image: "/vrs.png",
+    image: "/vrs.webp",
 
     images: {
-      user: ["/vrs-user1.png", "/vrs-user2.png", "/vrs-user3.png"],
-      admin: ["/vrs-admin1.png", "/vrs-admin2.png", "/vrs-admin3.png"],
+      user: ["/vrs-user1.webp", "/vrs-user2.webp", "/vrs-user3.webp"],
+      admin: ["/vrs-admin1.webp", "/vrs-admin2.webp", "/vrs-admin3.webp"],
     },
 
     features: {
@@ -265,11 +261,11 @@ export const projects: Project[] = [
 
     tech: ["Next.js", "Node.js", "Express.js", "MongoDB"],
 
-    image: "/limoxy.png",
+    image: "/limoxy.webp",
 
     images: {
-      user: ["/limoxy-user1.png", "/limoxy-user2.png"],
-      admin: ["/limoxy-admin1.png", "/limoxy-admin2.png"],
+      user: ["/limoxy-user1.webp", "/limoxy-user2.webp"],
+      admin: ["/limoxy-admin1.webp", "/limoxy-admin2.webp"],
     },
 
     features: {
@@ -285,25 +281,9 @@ export const projects: Project[] = [
         "Booking status management (Pending / Confirmed / Completed)",
         "Advanced booking dashboard with filters and search",
         "Supplier management (add, assign and manage vendors)",
-        "Payment link generation and tracking",
-        "Real-time payment status (Paid / Unpaid / Partial)",
-        "Automated invoice generation with commission calculation",
-        "Voucher generation with trip details",
-        "Commission and pricing control with profit tracking",
-        "Admin and Super Admin role management",
+        "Payment link generation and real-time payment status",
+        "Automated invoice and voucher generation with commission calculation",
         "Analytics dashboard for revenue, bookings and performance",
-      ],
-      bookingManagementPage: [
-        "Create bookings manually with full form validation",
-        "Capture client details (name, email, phone, country, flight number)",
-        "Capture trip details (car type, pickup/drop, date, time, passengers)",
-        "Automatic price calculation based on inputs",
-        "Assign a supplier/vendor to each booking",
-        "Set commission and pricing dynamically",
-        "Generate a unique booking reference ID",
-        "Track the booking lifecycle (Pending → Confirmed → Completed)",
-        "Create payment links directly from a booking",
-        "View all bookings with status, date and payment filters",
       ],
     },
 
@@ -348,10 +328,10 @@ export const projects: Project[] = [
 
     tech: ["Next.js", "Node.js", "Express.js", "MongoDB"],
 
-    image: "/fetch-kids.png",
+    image: "/fetch-kids.webp",
 
     images: {
-      user: ["/fetch-kids.png"],
+      user: ["/fetch-kids.webp"],
     },
 
     features: {
@@ -387,58 +367,6 @@ export const projects: Project[] = [
   },
 
   {
-    slug: "woocommerce-projects",
-    title: "WooCommerce Projects",
-    category: "website",
-    description:
-      "Custom WooCommerce development for business e-commerce websites — theme customization, REST API integrations, payment gateway setup and performance optimization for production storefronts.",
-
-    tech: [
-      "WooCommerce",
-      "WordPress",
-      "PHP",
-      "REST API",
-      "JavaScript",
-      "Performance",
-    ],
-
-    image: "/woocommerce.png",
-
-    images: {
-      user: ["/woocommerce-1.png", "/woocommerce-2.png"],
-    },
-
-    features: {
-      user: [
-        "Custom WooCommerce storefronts tailored to each business",
-        "Product catalog, cart and checkout flows",
-        "Integrated payment gateways",
-        "Responsive, SEO-friendly design",
-        "Optimized page performance and load times",
-      ],
-    },
-
-    caseStudy: {
-      problem:
-        "Businesses needed customized e-commerce storefronts with tailored functionality and third-party integrations beyond default WooCommerce capabilities.",
-      solution:
-        "Delivered custom WooCommerce builds with theme customization, REST API integrations and payment gateway setup, focused on performance and conversion.",
-      result:
-        "Launched production e-commerce sites with tailored functionality, secure payments and improved performance.",
-      architecture: [
-        "Platform: WordPress with WooCommerce",
-        "Customization: Custom themes and plugin configuration",
-        "Integrations: REST APIs and payment gateways",
-        "Optimization: Caching plus asset and performance tuning",
-        "Hosting: Hostinger with domain and SSL configuration",
-      ],
-    },
-
-    github: REPOS,
-    live: PROFILE,
-  },
-
-  {
     slug: "teal-culture",
     title: "Teal Culture",
     category: "website",
@@ -447,10 +375,10 @@ export const projects: Project[] = [
 
     tech: ["Next.js", "Tailwind CSS", "Framer Motion"],
 
-    image: "/teal.png",
+    image: "/teal.webp",
 
     images: {
-      user: ["/teal-1.png", "/teal-2.png"],
+      user: ["/teal-1.webp", "/teal-2.webp"],
     },
 
     features: {

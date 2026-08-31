@@ -1,18 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { projects } from "@/lib/projects";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  ExternalLink,
-  Github,
-  CheckCircle2,
-  Cpu,
-  AlertCircle,
-  Lightbulb,
-  TrendingUp,
-} from "lucide-react";
+import { projects, type Project } from "@/lib/projects";
 import FooterSimple from "@/components/ui/FooterSimple";
 
 export function generateStaticParams() {
@@ -29,6 +19,7 @@ export function generateMetadata({
   return {
     title: project.title,
     description: project.description,
+    alternates: { canonical: `/projects/${params.slug}` },
     openGraph: {
       title: project.title,
       description: project.description,
@@ -37,135 +28,156 @@ export function generateMetadata({
   };
 }
 
+function SectionLabel({ index, label }: { index: string; label: string }) {
+  return (
+    <div className="rule pt-6">
+      <h2 className="mono-label">
+        <span className="text-[var(--accent)]">{index} / </span>
+        {label}
+      </h2>
+    </div>
+  );
+}
+
+const isPrivateBuild = (live: string) => live.includes("github.com");
+
+function Gallery({
+  images,
+  title,
+  kind,
+}: {
+  images: string[];
+  title: string;
+  kind: string;
+}) {
+  return (
+    <div
+      className={`mt-8 grid gap-5 ${
+        images.length > 1 ? "md:grid-cols-2" : ""
+      }`}
+    >
+      {images.map((img, i) => (
+        <div key={img} className="frame aspect-[16/9]">
+          <Image
+            src={img}
+            alt={`${title} — ${kind} screenshot ${i + 1} of ${images.length}`}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover object-top"
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function FeatureList({ items }: { items: string[] }) {
+  return (
+    <ul className="mt-8 grid gap-x-12 sm:grid-cols-2">
+      {items.map((f) => (
+        <li
+          key={f}
+          className="border-b border-[var(--line)] py-3 text-[15px] leading-relaxed"
+        >
+          {f}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export default function CaseStudyPage({
   params,
 }: {
   params: { slug: string };
 }) {
-  const project = projects.find((p) => p.slug === params.slug);
+  const project = projects.find((p) => p.slug === params.slug) as
+    | Project
+    | undefined;
   if (!project) notFound();
 
   return (
     <>
-      <article className="min-h-screen text-white">
-        {/* Hero banner */}
-        <div className="relative h-[55vh] min-h-[400px] overflow-hidden">
+      <article className="wrap pb-24 pt-28 md:pt-32">
+        {/* Header */}
+        <header>
+          <Link href="/projects" className="link-u text-sm">
+            ← All projects
+          </Link>
+
+          <p className="mono-label mt-10 text-[var(--ink-3)]">
+            Case study — {project.category}
+          </p>
+          <h1 className="mt-4 text-[clamp(2.5rem,6vw,4.25rem)] font-semibold tracking-tight">
+            {project.title}
+          </h1>
+          <p className="mt-6 max-w-3xl text-lg leading-relaxed">
+            {project.description}
+          </p>
+
+          <div className="mt-8 flex flex-wrap items-center gap-6 text-sm">
+            {isPrivateBuild(project.live) ? (
+              <span className="mono-label">
+                Private / enterprise build — details on request
+              </span>
+            ) : (
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-solid"
+              >
+                Live site
+                <span aria-hidden="true">↗</span>
+                <span className="sr-only">(opens in new tab)</span>
+              </a>
+            )}
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-u"
+            >
+              GitHub
+              <span aria-hidden="true"> ↗</span>
+              <span className="sr-only">(opens in new tab)</span>
+            </a>
+          </div>
+        </header>
+
+        {/* Hero screenshot */}
+        <div className="frame mt-14 aspect-[16/8]">
           <Image
             src={project.image}
-            alt={project.title}
+            alt={`${project.title} — main interface`}
             fill
             priority
-            sizes="100vw"
-            className="object-cover"
+            sizes="(max-width: 1200px) 100vw, 1152px"
+            className="object-cover object-top"
           />
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to bottom, rgba(9,9,11,0.35) 0%, rgba(9,9,11,0.75) 60%, #09090b 100%)",
-            }}
-          />
-
-          <div className="absolute left-6 top-24 z-10">
-            <Link
-              href="/projects"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-black/50 px-4 py-2 text-xs font-medium text-zinc-200 backdrop-blur-sm transition-colors hover:border-indigo-400/40 hover:text-white"
-            >
-              <ArrowLeft className="h-3.5 w-3.5" />
-              Back to Projects
-            </Link>
-          </div>
-
-          <div className="absolute bottom-12 left-0 right-0 mx-auto max-w-6xl px-6">
-            <span className="mb-3 block text-xs font-medium uppercase tracking-widest text-indigo-300">
-              Case Study
-            </span>
-            <h1 className="mb-4 text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-              {project.title}
-            </h1>
-            <p className="max-w-2xl text-lg text-zinc-300">
-              {project.description}
-            </p>
-          </div>
         </div>
 
-        {/* Body */}
-        <div className="mx-auto max-w-6xl space-y-24 px-6 py-20">
+        <div className="mt-20 space-y-20">
           {/* Tech */}
           <section>
-            <SectionLabel icon={<Cpu className="h-3.5 w-3.5" />} label="Tech Stack" />
-            <div className="mt-6 flex flex-wrap gap-2.5">
-              {project.tech.map((tech) => (
-                <span key={tech} className="pill pill-accent !text-sm">
-                  {tech}
-                </span>
-              ))}
-            </div>
+            <SectionLabel index="01" label="Technology" />
+            <p className="mono-label mt-6 leading-loose text-[var(--ink-2)]">
+              {project.tech.join(" · ")}
+            </p>
           </section>
-
-          {/* User experience */}
-          <section>
-            <SectionLabel label="User Experience" />
-            <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {project.images.user.map((img, i) => (
-                <div
-                  key={i}
-                  className="group relative h-52 overflow-hidden rounded-2xl border border-white/[0.06]"
-                >
-                  <Image
-                    src={img}
-                    alt={`${project.title} user view ${i + 1}`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                  />
-                </div>
-              ))}
-            </div>
-            {(project.features.user?.length ?? 0) > 0 && (
-              <FeatureList items={project.features.user} />
-            )}
-          </section>
-
-          {/* Admin dashboard */}
-          {(project.images.admin?.length ?? 0) > 0 && (
-            <section>
-              <SectionLabel label="Admin Dashboard" />
-              <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-                {(project.images.admin ?? []).map((img, i) => (
-                  <div
-                    key={i}
-                    className="group relative h-52 overflow-hidden rounded-2xl border border-white/[0.06]"
-                  >
-                    <Image
-                      src={img}
-                      alt={`${project.title} admin view ${i + 1}`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    />
-                  </div>
-                ))}
-              </div>
-              <FeatureList items={project.features.admin ?? []} />
-            </section>
-          )}
 
           {/* Case study */}
           <section>
-            <SectionLabel label="Case Study" />
-            <div className="mt-8 grid gap-5 md:grid-cols-3">
+            <SectionLabel index="02" label="Case study" />
+            <div className="mt-8 grid gap-10 lg:grid-cols-3 lg:gap-8">
               {[
-                { icon: AlertCircle, label: "Problem", text: project.caseStudy.problem },
-                { icon: Lightbulb, label: "Solution", text: project.caseStudy.solution },
-                { icon: TrendingUp, label: "Result", text: project.caseStudy.result },
-              ].map(({ icon: Icon, label, text }) => (
-                <div key={label} className="card p-7">
-                  <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-xl border border-indigo-500/20 bg-indigo-500/10">
-                    <Icon className="h-4 w-4 text-indigo-300" />
-                  </div>
-                  <h3 className="mb-3 font-semibold text-white">{label}</h3>
-                  <p className="text-sm leading-relaxed text-zinc-400">{text}</p>
+                { label: "Problem", text: project.caseStudy.problem },
+                { label: "Solution", text: project.caseStudy.solution },
+                { label: "Result", text: project.caseStudy.result },
+              ].map(({ label, text }) => (
+                <div key={label}>
+                  <h3 className="text-base font-semibold">{label}</h3>
+                  <p className="mt-3 text-[15px] leading-relaxed">{text}</p>
                 </div>
               ))}
             </div>
@@ -173,107 +185,113 @@ export default function CaseStudyPage({
 
           {/* Architecture */}
           <section>
-            <SectionLabel icon={<Cpu className="h-3.5 w-3.5" />} label="Architecture" />
-            <div className="mt-8 space-y-3">
+            <SectionLabel index="03" label="Architecture" />
+            <ol className="mt-8">
               {project.caseStudy.architecture.map((item, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-4 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4"
+                <li
+                  key={item}
+                  className="flex items-baseline gap-6 border-b border-[var(--line)] py-3.5"
                 >
-                  <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-indigo-500/15 text-xs font-semibold text-indigo-300">
-                    {i + 1}
+                  <span className="mono-label shrink-0 text-[var(--ink-3)]">
+                    {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-sm leading-relaxed text-zinc-400">
-                    {item}
-                  </span>
-                </div>
+                  <span className="text-[15px] leading-relaxed">{item}</span>
+                </li>
               ))}
-            </div>
+            </ol>
           </section>
 
-          {/* CTA */}
-          <section className="pb-6 text-center">
-            <div className="relative mx-auto inline-block overflow-hidden rounded-3xl border border-white/[0.08] bg-[#111113] px-10 py-12 sm:px-16">
-              <div
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(60% 60% at 50% 0%, rgba(99,102,241,0.12), transparent 70%)",
-                }}
+          {/* User experience — don't repeat the hero screenshot */}
+          <section>
+            <SectionLabel index="04" label="User experience" />
+            {project.images.user.filter((img) => img !== project.image)
+              .length > 0 && (
+              <Gallery
+                images={project.images.user.filter(
+                  (img) => img !== project.image,
+                )}
+                title={project.title}
+                kind="user"
               />
-              <div className="relative z-10">
-                <h2 className="mb-3 text-2xl font-semibold text-white sm:text-3xl">
-                  Explore Live Project
-                </h2>
-                <p className="mb-8 text-sm text-zinc-400">
-                  See it in action or browse the source code.
-                </p>
-                <div className="flex flex-wrap justify-center gap-4">
+            )}
+            {project.features.user.length > 0 && (
+              <FeatureList items={project.features.user} />
+            )}
+          </section>
+
+          {/* Admin */}
+          {(project.features.admin?.length ?? 0) > 0 && (
+            <section>
+              <SectionLabel index="05" label="Admin experience" />
+              {(project.images.admin?.length ?? 0) > 0 && (
+                <Gallery
+                  images={project.images.admin ?? []}
+                  title={project.title}
+                  kind="admin"
+                />
+              )}
+              <FeatureList items={project.features.admin ?? []} />
+            </section>
+          )}
+
+          {/* Admin workflow (where documented) */}
+          {(project.caseStudy.detailedAdminFlow?.length ?? 0) > 0 && (
+            <section>
+              <SectionLabel index="06" label="Admin workflow" />
+              <ol className="mt-8">
+                {(project.caseStudy.detailedAdminFlow ?? []).map((step, i) => (
+                  <li
+                    key={step}
+                    className="flex items-baseline gap-6 border-b border-[var(--line)] py-3.5"
+                  >
+                    <span className="mono-label shrink-0 text-[var(--ink-3)]">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-[15px] leading-relaxed">{step}</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+
+          {/* Footer CTA */}
+          <section className="rule pt-10">
+            <p className="text-lg">
+              {isPrivateBuild(project.live) ? (
+                <>
+                  This is a private enterprise build — for details or a
+                  walkthrough,{" "}
+                  <Link href="/contact" className="link-accent font-medium">
+                    get in touch
+                  </Link>
+                  .
+                </>
+              ) : (
+                <>
+                  Want the full picture?{" "}
                   <a
                     href={project.live}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-primary"
+                    className="link-accent font-medium"
                   >
-                    <ExternalLink className="h-4 w-4" />
-                    Live Site
-                  </a>
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-ghost"
-                  >
-                    <Github className="h-4 w-4" />
-                    GitHub
-                  </a>
-                </div>
-              </div>
-            </div>
+                    Explore the live project
+                    <span aria-hidden="true"> ↗</span>
+                    <span className="sr-only">(opens in new tab)</span>
+                  </a>{" "}
+                  or{" "}
+                  <Link href="/contact" className="link-accent font-medium">
+                    get in touch
+                  </Link>
+                  .
+                </>
+              )}
+            </p>
           </section>
         </div>
       </article>
 
       <FooterSimple />
     </>
-  );
-}
-
-function SectionLabel({
-  label,
-  icon,
-}: {
-  label: string;
-  icon?: React.ReactNode;
-}) {
-  return (
-    <div className="flex items-center gap-3">
-      {icon ? (
-        <div className="flex h-8 w-8 items-center justify-center rounded-xl border border-indigo-500/20 bg-indigo-500/10 text-indigo-300">
-          {icon}
-        </div>
-      ) : (
-        <span className="h-px w-7 bg-gradient-to-r from-indigo-400 to-transparent" />
-      )}
-      <p className="text-xs font-medium uppercase tracking-[0.25em] text-indigo-300">
-        {label}
-      </p>
-    </div>
-  );
-}
-
-function FeatureList({ items = [] }: { items?: string[] }) {
-  return (
-    <div className="mt-6 grid gap-3 sm:grid-cols-2">
-      {items.map((f, i) => (
-        <div
-          key={i}
-          className="flex items-start gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4"
-        >
-          <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-indigo-400" />
-          <span className="text-sm leading-relaxed text-zinc-400">{f}</span>
-        </div>
-      ))}
-    </div>
   );
 }

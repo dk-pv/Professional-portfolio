@@ -2,11 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-// Global UI
-import GridBackground from "@/components/ui/GridBackground";
-import ScrollProgress from "@/components/ui/ScrollProgress";
-import LoaderProvider from "@/components/ui/LoaderProvider";
-import PageTransition from "@/components/ui/PageTransition";
 import Navbar from "@/components/ui/Navbar";
 
 const inter = Inter({
@@ -27,23 +22,8 @@ export const metadata: Metadata = {
     template: "%s — Danish Pv",
   },
   description: DESCRIPTION,
-  keywords: [
-    "Danish Pv",
-    "Full Stack Developer",
-    "Next.js",
-    "React",
-    "TypeScript",
-    "NestJS",
-    "Node.js",
-    "PostgreSQL",
-    "MongoDB",
-    "Enterprise Applications",
-    "ERP",
-    "Real-time Systems",
-  ],
   authors: [{ name: "Danish Pv" }],
   creator: "Danish Pv",
-  alternates: { canonical: "/" },
   openGraph: {
     title: "Danish Pv — Full Stack Developer",
     description: DESCRIPTION,
@@ -51,16 +31,14 @@ export const metadata: Metadata = {
     siteName: "Danish Pv",
     type: "website",
     locale: "en_US",
-    images: [{ url: "/danish.png", width: 800, height: 1000, alt: "Danish Pv" }],
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Danish Pv — Full Stack Developer" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Danish Pv — Full Stack Developer",
-    description:
-      "Full Stack Developer building enterprise applications, ERP systems and real-time platforms with React, Next.js, NestJS, PostgreSQL and MongoDB.",
-    images: ["/danish.png"],
+    description: DESCRIPTION,
+    images: ["/og.jpg"],
   },
-  icons: { icon: "/danish.png" },
 };
 
 const personJsonLd = {
@@ -70,7 +48,7 @@ const personJsonLd = {
   jobTitle: "Full Stack Developer",
   description: DESCRIPTION,
   url: SITE_URL,
-  image: `${SITE_URL}/danish.png`,
+  image: `${SITE_URL}/dk.webp`,
   email: "mailto:danish.pv999@gmail.com",
   sameAs: [
     "https://github.com/dk-pv",
@@ -84,8 +62,6 @@ const personJsonLd = {
     "NestJS",
     "PostgreSQL",
     "MongoDB",
-    "Prisma ORM",
-    "Socket.IO",
     "REST APIs",
     "Enterprise Applications",
     "ERP Systems",
@@ -94,8 +70,8 @@ const personJsonLd = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#09090b",
-  colorScheme: "dark",
+  themeColor: "#faf9f6",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
 };
@@ -113,18 +89,12 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
 
-        {/* One static, GPU-cheap background for the entire site */}
-        <GridBackground />
+        <a href="#main" className="skip-link">
+          Skip to content
+        </a>
 
-        {/* Top scroll-progress bar */}
-        <ScrollProgress />
-
-        <LoaderProvider>
-          <Navbar />
-          <PageTransition>
-            <main id="main">{children}</main>
-          </PageTransition>
-        </LoaderProvider>
+        <Navbar />
+        <main id="main">{children}</main>
       </body>
     </html>
   );

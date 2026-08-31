@@ -1,60 +1,41 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "About", id: "about" },
-  { label: "Skills", id: "skills" },
   { label: "Projects", id: "projects" },
+  { label: "Experience", id: "experience" },
+  { label: "Skills", id: "skills" },
   { label: "Contact", id: "contact" },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
   const scrolledRef = useRef(false);
-  const hiddenRef = useRef(false);
-  const lastYRef = useRef(0);
   const tickingRef = useRef(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
-  /* Shrink + hide-on-scroll-down / show-on-scroll-up.
-     rAF-throttled and ref-guarded so setState only fires on real changes. */
+  /* Border-on-scroll. rAF-throttled, setState only on real change. */
   useEffect(() => {
     const update = () => {
-      const y = window.scrollY;
-
-      const nextScrolled = y > 24;
-      if (nextScrolled !== scrolledRef.current) {
-        scrolledRef.current = nextScrolled;
-        setScrolled(nextScrolled);
+      const next = window.scrollY > 8;
+      if (next !== scrolledRef.current) {
+        scrolledRef.current = next;
+        setScrolled(next);
       }
-
-      let nextHidden = hiddenRef.current;
-      if (y < 80) nextHidden = false;
-      else if (y > lastYRef.current + 6) nextHidden = true;
-      else if (y < lastYRef.current - 6) nextHidden = false;
-
-      if (nextHidden !== hiddenRef.current) {
-        hiddenRef.current = nextHidden;
-        setHidden(nextHidden);
-      }
-
-      lastYRef.current = y;
       tickingRef.current = false;
     };
-
     const onScroll = () => {
       if (!tickingRef.current) {
         tickingRef.current = true;
         requestAnimationFrame(update);
       }
     };
-
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -75,122 +56,122 @@ export default function Navbar() {
       },
       { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
     );
-
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
   }, []);
 
+  /* Close drawer on Escape, return focus to the toggle */
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMobileOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [mobileOpen]);
+
   return (
-    <>
-      <div className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
-      <motion.nav
-        initial={{ y: -70, opacity: 0 }}
-        animate={{
-          y: hidden && !mobileOpen ? -96 : 0,
-          opacity: 1,
-        }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className={`pointer-events-auto flex items-center rounded-full glass transition-[gap,padding,box-shadow] duration-300 ${
-          scrolled
-            ? "gap-1 px-2 py-1.5 shadow-lg shadow-black/40"
-            : "gap-1.5 px-3 py-2"
-        }`}
-        aria-label="Primary"
-      >
-        {/* Logo */}
+    <header
+      className={`fixed inset-x-0 top-0 z-50 bg-[var(--bg)]/95 backdrop-blur-sm transition-shadow ${
+        scrolled || mobileOpen ? "border-b border-[var(--line)]" : ""
+      }`}
+    >
+      <nav aria-label="Primary" className="wrap flex h-16 items-center justify-between">
+        {/* Wordmark */}
         <Link
           href="/"
           onClick={() => setMobileOpen(false)}
-          className="mr-1 rounded-full px-3 py-1 text-sm font-bold tracking-tight text-white transition-colors hover:text-indigo-300"
-          aria-label="Home"
+          className="text-[15px] font-semibold tracking-tight text-[var(--ink)] transition-colors hover:text-[var(--accent)]"
         >
-          D<span className="text-indigo-400">K</span>
+          Danish&nbsp;Pv
         </Link>
 
-        <span className="mx-1 hidden h-4 w-px bg-white/10 md:block" />
-
         {/* Desktop links */}
-        <div className="hidden items-center gap-1 md:flex">
+        <div className="hidden items-center gap-7 md:flex">
           {NAV_LINKS.map((link) => {
             const isActive = activeSection === link.id;
             return (
               <Link
                 key={link.id}
                 href={`/#${link.id}`}
-                className={`relative rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-200 ${
-                  isActive ? "text-white" : "text-zinc-400 hover:text-white"
+                aria-current={isActive ? "true" : undefined}
+                className={`relative py-1 text-sm transition-colors ${
+                  isActive
+                    ? "text-[var(--ink)]"
+                    : "text-[var(--ink-2)] hover:text-[var(--ink)]"
                 }`}
               >
-                {isActive && (
-                  <motion.span
-                    layoutId="nav-pill"
-                    className="absolute inset-0 rounded-full border border-indigo-400/30 bg-indigo-500/15"
-                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                  />
-                )}
-                <span className="relative z-10">{link.label}</span>
+                {link.label}
+                <span
+                  className={`absolute inset-x-0 -bottom-0.5 h-px bg-[var(--accent)] transition-transform duration-300 ${
+                    isActive ? "scale-x-100" : "scale-x-0"
+                  }`}
+                  style={{ transformOrigin: "left" }}
+                  aria-hidden="true"
+                />
               </Link>
             );
           })}
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-outline !min-h-0 !px-4 !py-1.5 text-sm"
+          >
+            Resume
+            <span aria-hidden="true">↗</span>
+            <span className="sr-only">(PDF, opens in new tab)</span>
+          </a>
         </div>
-
-        <span className="mx-1 hidden h-4 w-px bg-white/10 md:block" />
-
-        {/* Resume CTA */}
-        <a
-          href="/resume.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hidden rounded-full bg-indigo-500 px-4 py-1.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-colors duration-200 hover:bg-indigo-400 md:inline-block"
-        >
-          Resume ↗
-        </a>
 
         {/* Mobile toggle */}
         <button
+          ref={toggleRef}
           onClick={() => setMobileOpen((p) => !p)}
-          className="rounded-full p-2 text-white transition hover:bg-white/10 md:hidden"
+          className="flex h-11 w-11 items-center justify-center text-[var(--ink)] md:hidden"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
+          aria-controls="mobile-menu"
         >
-          {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
-      </motion.nav>
-      </div>
+      </nav>
 
       {/* Mobile drawer */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            key="mobile-menu"
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="glass fixed left-4 right-4 top-20 z-40 flex flex-col gap-1 rounded-2xl p-3 md:hidden"
-          >
+      {mobileOpen && (
+        <div
+          id="mobile-menu"
+          className="border-t border-[var(--line)] bg-[var(--bg)] px-6 py-4 md:hidden"
+        >
+          <ul>
             {NAV_LINKS.map((link) => (
-              <Link
-                key={link.id}
-                href={`/#${link.id}`}
-                onClick={() => setMobileOpen(false)}
-                className="rounded-xl px-4 py-3 text-sm text-zinc-300 transition hover:bg-white/5 hover:text-white"
-              >
-                {link.label}
-              </Link>
+              <li key={link.id}>
+                <Link
+                  href={`/#${link.id}`}
+                  onClick={() => setMobileOpen(false)}
+                  className="block border-b border-[var(--line)] py-3.5 text-[15px] text-[var(--ink)]"
+                >
+                  {link.label}
+                </Link>
+              </li>
             ))}
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMobileOpen(false)}
-              className="mt-1 rounded-xl bg-indigo-500 px-4 py-3 text-center text-sm font-semibold text-white"
-            >
-              Resume ↗
-            </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+          </ul>
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMobileOpen(false)}
+            className="btn btn-solid mt-4 w-full"
+          >
+            Resume
+            <span aria-hidden="true">↗</span>
+            <span className="sr-only">(PDF, opens in new tab)</span>
+          </a>
+        </div>
+      )}
+    </header>
   );
 }

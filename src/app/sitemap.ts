@@ -4,9 +4,12 @@ import { projects } from "@/lib/projects";
 const SITE_URL = "https://danishpv.dev";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const lastModified = new Date();
+
   const routes = ["", "/about", "/skills", "/projects", "/contact"].map(
     (path) => ({
       url: `${SITE_URL}${path}`,
+      lastModified,
       changeFrequency: "monthly" as const,
       priority: path === "" ? 1 : 0.8,
     }),
@@ -14,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const projectRoutes = projects.map((p) => ({
     url: `${SITE_URL}/projects/${p.slug}`,
+    lastModified,
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));
