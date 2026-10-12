@@ -332,7 +332,7 @@ export const projects: Project[] = [
     image: "/fleettrack.webp",
 
     images: {
-      user: ["/fleettrack.webp", "/fleettrack-login.webp"],
+      user: ["/fleettrack.png", "/fleettrack-login.webp"],
     },
 
     features: {
