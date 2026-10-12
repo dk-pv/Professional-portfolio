@@ -34,13 +34,177 @@ const PROFILE = "https://github.com/dk-pv";
 
 export const projects: Project[] = [
   {
+    slug: "ragno-power-system",
+    title: "Ragno Power System — Solar Dealer CRM",
+    category: "application",
+
+    description:
+      "A full-stack Solar Dealer CRM built to manage the complete sales and installation lifecycle, from lead acquisition and pipeline tracking to installation work, document collection, follow-ups and reporting. The platform features separate Admin and Staff access, dedicated lead and work pipelines, solar plan management, activity tracking, role-based permissions, notifications and operational reports. Built with Next.js, TypeScript, Django REST Framework and PostgreSQL.",
+
+    tech: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Python",
+      "Django",
+      "Django REST Framework",
+      "PostgreSQL",
+      "JWT Authentication",
+      "Cloudinary",
+    ],
+
+    image: "/ragno-power-system.png",
+
+    images: {
+      user: ["/ragno-power-system.png"],
+      admin: [],
+    },
+
+    features: {
+      user: [
+        "Staff workspace for viewing and managing assigned activities, subject to the Staff role's enabled permissions",
+
+        "Lead follow-up activities with titles, descriptions, assigned staff, due dates and completion notes",
+
+        "Work activity tracking with pending and completed states, completion history and activity reopening where permitted",
+
+        "Role-aware navigation that exposes only the application modules available to the signed-in user",
+
+        "Personal notification feed for relevant activity assignments and status changes",
+
+        "Lead and installation-work activity history accessible through the appropriate permitted module",
+      ],
+
+      admin: [
+        "Centralized lead management with customer contact details, location, solar plan, deal amount, source, status and staff assignment",
+
+        "Dedicated sales pipeline with New, Initial Contact, Hot, Superhot, Won and Lost stages",
+
+        "Lead search by customer name, phone number, email, location, PIN code or record ID",
+
+        "Advanced lead filtering, sorting, pagination, pinned records and bulk operations",
+
+        "Controlled lead-stage transitions with terminal Won and Lost outcomes",
+
+        "One-time conversion of Won leads into installation Works, preserving the customer details, selected plan and confirmed amount",
+
+        "Separate Work management workspace with installation details, assigned staff, due dates and confirmed pricing",
+
+        "Installation pipeline covering Loan Work / Documents, Feasibility, Structure Work, Electrical Work, KSEB Documentation, Subsidy Documentation and Completed",
+
+        "Work pipeline board and list views with stage changes, search, filtering, sorting and bulk stage updates",
+
+        "Solar plan management with system capacity, pricing and active/inactive status",
+
+        "Work document checklist covering bank passbook, Aadhaar card, PAN card, electricity bill, contact details, site photo, land tax paper, name and signature, DCR, GPS photo and inverter serial number",
+
+        "Document uploads with file-type and size validation, private Cloudinary storage, replacement handling and completion summaries",
+
+        "Lead and Work activity management with assigned staff, due dates, pending/completed states and completion notes",
+
+        "Dashboard with lead and Work summaries, stage breakdowns, follow-up counts, recent records and a CRM timeline",
+
+        "Reports for leads, Works, activities and follow-ups, staff activity and CRM history",
+
+        "Period-based reporting with filters, summary metrics, record-level details and CSV exports",
+
+        "User administration with account creation, editing, role assignment, activation and deactivation",
+
+        "Role and access management for Admin and Staff, with permissions assigned at the module level",
+
+        "Notification center for lead creation, lead conversion, activity assignments, activity status changes and completed work",
+
+        "WhatsApp message preparation using lead-specific contact details and reusable follow-up templates",
+
+        "Department management and CRM data-management utilities",
+      ],
+    },
+
+    caseStudy: {
+      problem:
+        "Solar dealer operations involve two connected workflows: converting prospects into customers and coordinating the installation work that follows a successful sale. Lead tracking, follow-ups, installation stages, customer documents and staff responsibilities need to remain connected. A disconnected process makes it harder to track outstanding work, identify incomplete documentation and understand overall sales and installation progress.",
+
+      solution:
+        "Built a full-stack Solar Dealer CRM with dedicated lead and installation-work modules. Leads move through a controlled sales pipeline, and a Won lead can be converted into a Work without losing its customer information, selected solar plan or confirmed amount. The Work then progresses through seven installation stages, with assigned staff, due dates, activities and document requirements. The application combines this workflow with role-based module access, a dashboard, notifications and period-based reporting. The backend uses Django REST Framework and PostgreSQL, while the Next.js frontend provides searchable tables, pipeline boards, detail pages and management screens.",
+
+      result:
+        "The implemented application brings lead management, sales-stage tracking, lead conversion, installation work, customer documentation, activities and reporting into one CRM. Its data model connects each installation Work to its originating lead, while separate pipelines make sales progress and installation progress independently trackable. Quantitative business outcomes and production deployment status have not been verified.",
+
+      architecture: [
+        "Frontend: Next.js App Router, React, TypeScript and Tailwind CSS",
+
+        "Backend: Python, Django and Django REST Framework with modular applications for accounts, leads, Works, activities, dashboard, reports, notifications and maintenance",
+
+        "Database: PostgreSQL with relational models, database migrations, constraints and indexes",
+
+        "Authentication: JWT access and refresh tokens with server-side request authentication",
+
+        "Authorization: Custom Admin and Staff roles, module-level permissions and server-side API access checks",
+
+        "Lead lifecycle: Controlled sales-stage transitions and transactional conversion of Won leads into installation Works",
+
+        "Work management: Separate installation pipeline with assignable staff, due dates, activities and document-completion tracking",
+
+        "File storage: Private Cloudinary document storage with file-content validation, restricted downloads and replacement handling",
+
+        "Reporting: Dedicated reporting APIs with period filters, summaries, detailed records and CSV export support",
+
+        "Frontend data layer: Centralized API utilities, authenticated application shell, permission-aware navigation and reusable management components",
+      ],
+
+      detailedAdminFlow: [
+        "Administrator signs in and accesses the modules granted to the Admin role",
+
+        "Reviews the dashboard for lead totals, installation progress, follow-ups and recent CRM activity",
+
+        "Creates or manages solar plans, including system capacity and pricing",
+
+        "Creates leads with customer details, contact information, location, solar plan, amount, lead source and assigned staff",
+
+        "Tracks leads through New, Initial Contact, Hot and Superhot stages",
+
+        "Marks successful opportunities as Won or unsuccessful opportunities as Lost, subject to the pipeline's transition rules",
+
+        "Converts a Won lead into an installation Work, preserving its customer information, solar plan and confirmed amount",
+
+        "Assigns installation work, sets due dates and advances the Work through the installation pipeline",
+
+        "Reviews the required loan and customer documents and subsidy documentation, including checklist completion",
+
+        "Coordinates follow-ups, phone calls, site visits, customer meetings and Work activities",
+
+        "Reviews lead, Work, activity, staff and CRM history reports over selected periods",
+
+        "Exports report data for further analysis",
+
+        "Manages user accounts, departments and module-level role permissions",
+
+        "Reviews notifications and monitors the progress of sales and installation operations",
+      ],
+    },
+
+    github:
+      "[https://github.com/dk-pv?tab=repositories](https://github.com/dk-pv?tab=repositories)",
+
+    live: "[https://github.com/dk-pv](https://github.com/dk-pv)",
+  },
+  {
     slug: "emarath-erp",
     title: "Emarath ERP",
     category: "application",
     description:
       "CRM-centered ERP for lead management and sales operations — leads, pipeline, activities, call analytics, GPS field tracking, documents and reporting in one role-scoped system. Built with a NestJS + PostgreSQL backend and a Next.js frontend.",
 
-    tech: ["Next.js", "React", "TypeScript", "NestJS", "PostgreSQL", "Prisma", "Tailwind CSS"],
+    tech: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "NestJS",
+      "PostgreSQL",
+      "Prisma",
+      "Tailwind CSS",
+    ],
 
     image: "/emarath.webp",
 
@@ -93,7 +257,16 @@ export const projects: Project[] = [
     description:
       "Company-wide ERP that runs sales, development, HR, finance and user management as permission-scoped modules — including a full attendance-to-payroll pipeline. Next.js frontend over a Node.js/Express + PostgreSQL API with Socket.IO realtime.",
 
-    tech: ["Next.js", "React", "TypeScript", "Node.js", "Express.js", "PostgreSQL", "Prisma", "Socket.IO"],
+    tech: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Node.js",
+      "Express.js",
+      "PostgreSQL",
+      "Prisma",
+      "Socket.IO",
+    ],
 
     image: "/enterprise-erp.webp",
 
@@ -146,7 +319,15 @@ export const projects: Project[] = [
     description:
       "Multi-tenant fleet-tracking platform — a NestJS API polls third-party GPS providers, normalizes vehicle telemetry into PostgreSQL and streams live positions over Socket.IO to map dashboards for admins and client fleets.",
 
-    tech: ["Next.js", "NestJS", "PostgreSQL", "Prisma", "Socket.IO", "Docker", "TypeScript"],
+    tech: [
+      "Next.js",
+      "NestJS",
+      "PostgreSQL",
+      "Prisma",
+      "Socket.IO",
+      "Docker",
+      "TypeScript",
+    ],
 
     image: "/fleettrack.webp",
 
